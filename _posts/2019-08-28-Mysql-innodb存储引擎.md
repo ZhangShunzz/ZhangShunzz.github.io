@@ -219,6 +219,6 @@ mysql> show variables like '%innodb_old_blocks_time%';
 
 #### 参考
 
-[缓冲池(buffer pool)，这次彻底懂了！！！](https://juejin.im/post/5d11a79ee51d4555e372a624)
-[MySQL innodb引擎的事务执行过程](https://www.linuxidc.com/Linux/2018-04/152080.htm#)
+[缓冲池(buffer pool)，这次彻底懂了！！！](https://juejin.im/post/5d11a79ee51d4555e372a624)<br>
+[MySQL innodb引擎的事务执行过程](https://www.linuxidc.com/Linux/2018-04/152080.htm#)<br>
 [『浅入浅出』MySQL 和 InnoDB](https://draveness.me/mysql-innodb)
