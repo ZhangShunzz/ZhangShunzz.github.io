@@ -31,10 +31,10 @@ InnoDB，是MySQL的数据库引擎之一，现为MySQL的默认存储引擎，�
 
 Mysql使用Innodb存储表时，会将`表的定义`和`数据索引`等信息分开存储，其中前者存储在.frm文件中，后者存储在.ibd文件中
 
-.frm
+`.frm`
 无论在 MySQL 中选择了哪个存储引擎，所有的 MySQL 表都会在硬盘上创建一个 .frm 文件用来描述表的格式或者说定义；.frm 文件的格式在不同的平台上都是相同的。
 
-.ibd
+`.ibd`
 InnoDB 中用于存储数据的文件总共有两个部分，一是系统表空间文件，包括 ibdata1、ibdata2 等文件，其中存储了 InnoDB 系统信息和用户数据库表数据和索引，是所有表公用的。
 当打开 innodb_file_per_table 选项时，.ibd 文件就是每一个表独有的表空间，文件存储了当前表的数据和相关的索引数据。
 
@@ -44,13 +44,13 @@ InnoDB 中用于存储数据的文件总共有两个部分，一是系统表空�
 
 ![页面存储格式](/img/in-post/2019-08-28-Mysql-innodb存储引擎/页面存储格式.png)
 
-Fil Header/Fil Trailer 关心的是记录页的头信息
-Page Header:记录页面的控制信息，共占150字节，包括页的左右兄弟页面指针、页的空间使用情况等
-Infimum:记录的是比该页中任何主键都小的值
-Supermum:记录的是比该页中任何主键都大的值
-User Records:是整个页面中真正存放行记录的部分
-Free Space:未分配空间，指页面未使用的存储空间，随着页面不断使用，未分配空间将会越来越小
-Page Directory:页面最后部分，占8个字节，主要存储页面的校验信息
+`Fil Header/Fil Trailer` 关心的是记录页的头信息<br>
+`Page Header`:记录页面的控制信息，共占150字节，包括页的左右兄弟页面指针、页的空间使用情况等<br>
+`Infimum`:记录的是比该页中任何主键都小的值<br>
+`Supermum`:记录的是比该页中任何主键都大的值<br>
+`User Records`:是整个页面中真正存放行记录的部分<br>
+`Free Space`:未分配空间，指页面未使用的存储空间，随着页面不断使用，未分配空间将会越来越小<br>
+`Page Directory`:页面最后部分，占8个字节，主要存储页面的校验信息<br>
 
 B+ 树在查找对应的记录时，并不会直接从树中找出对应的行记录，它只能获取记录所在的页，将整个页加载到内存中，再通过 Page Directory 中存储的稀疏索引和 n_owned、next_record 属性取出对应的记录，不过因为这一操作是在内存中进行的，所以通常会忽略这部分查找的耗时。
 
@@ -97,10 +97,10 @@ B+ 树在查找对应的记录时，并不会直接从树中找出对应的行�
 
 事务的隔离性是数据库处理数据的几大基础之一，而隔离级别其实就是提供给用户用于在性能和可靠性做出选择和权衡的配置项。Innodb遵循了SQL:1992标准中的四种隔离级别：READ UNCOMMITED、READ COMMITED、REPEATABLE READ和SERIALIZABLE
 
-`READ UNCOMMITED`:使用查询语句不会加锁，可能会读到未提交的事务
-`READ COMMITED`:只对记录加记录锁，而不会在记录之间加间隙锁，所以允许新的记录插入到被锁定记录的附近，所以再多次使用查询语句时，可能得到不同的结果
-`REPEATABLE READ`:多次读取同一范围的数据会返回第一次查询的快照，不会返回不同的数据行，但是可能发生幻读
-`SERIALIZABLE`:Innodb隐式地将全部的查询语句加上共享锁，解决了幻读的问题
+`READ UNCOMMITED`:使用查询语句不会加锁，可能会读到未提交的事务<br>
+`READ COMMITED`:只对记录加记录锁，而不会在记录之间加间隙锁，所以允许新的记录插入到被锁定记录的附近，所以再多次使用查询语句时，可能得到不同的结果<br>
+`REPEATABLE READ`:多次读取同一范围的数据会返回第一次查询的快照，不会返回不同的数据行，但是可能发生幻读<br>
+`SERIALIZABLE`:Innodb隐式地将全部的查询语句加上共享锁，解决了幻读的问题<br>
 
 (1)**脏读:在一个事务中，读取了其他事务未提交的数据**
 
@@ -151,16 +151,16 @@ Innodb通过加载最新的快照，然后重放最近的`checkpoint`点之后�
 
 针对`update user set name='zhangsan' where id=5;`
 
-1）事务开始；
-2）对id=5的这条数据上排他锁，并且给id=5两边的临近范围加gap锁，防止别的事务insert新数据；
-3）将需要修改的数据页PIN到innodb_buffer_cache中；
-4）记录id=5的数据到undo log；
-5）记录修改id=5的信息到redo log；
-6）修改id=5的name='zhangsan'；
-7）刷新innodb_buffer_cache中脏数据到底层磁盘，这个过程跟commit无关；
-8）commit，触发page cleaner线程，把redo从redo buffer cache中刷新到底层磁盘，并且刷新innodb_buffer_cache中脏数据到底层磁盘；
-9）记录binlog
-10）事务结束
+1）事务开始；<br>
+2）对id=5的这条数据上排他锁，并且给id=5两边的临近范围加gap锁，防止别的事务insert新数据；<br>
+3）将需要修改的数据页PIN到innodb_buffer_cache中；<br>
+4）记录id=5的数据到undo log；<br>
+5）记录修改id=5的信息到redo log；<br>
+6）修改id=5的name='zhangsan'；<br>
+7）刷新innodb_buffer_cache中脏数据到底层磁盘，这个过程跟commit无关；<br>
+8）commit，触发page cleaner线程，把redo从redo buffer cache中刷新到底层磁盘，并且刷新innodb_buffer_cache中脏数据到底层磁盘；<br>
+9）记录binlog<br>
+10）事务结束<br>
 
 #### Innodb：缓存池
 
