@@ -206,7 +206,9 @@ mysql> show variables like '%innodb_old_blocks_time%';
 ```
 
 `innodb_buffer_pool_size`:配置缓冲池的大小，在内存允许的情况下，DBA往往会建议调大这个参数，越多数据和索引放到内存里，数据库的性能会越好。
+
 `innodb_old_blocks_pct`:老生代占整个LRU链长度的比例，默认是37，即整个LRU中新生代与老生代长度比例是63:37。
+
 `innodb_old_blocks_time`:老生代停留时间窗口，单位是毫秒，默认是1000，即同时满足“被访问”与“在老生代停留时间超过1秒”两个条件，才会被插入到新生代头部。
 
 **innodb_buffer_pool总结**
