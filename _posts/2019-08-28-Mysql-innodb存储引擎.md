@@ -3,7 +3,7 @@ layout: post
 title: "Mysql——innodb存储引擎"
 subtitle: "InnoDB，是MySQL的数据库引擎之一，现为MySQL的默认存储引擎"
 author: "zhangshun"
-header-img: "img/bachground/1.jpg"
+header-img: "img/background/1.jpg"
 header-mask: 0.2
 tags:
   - Mysql
