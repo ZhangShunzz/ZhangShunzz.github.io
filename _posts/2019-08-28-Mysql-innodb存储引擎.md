@@ -210,10 +210,10 @@ mysql> show variables like '%innodb_old_blocks_time%';
 `innodb_old_blocks_time`:老生代停留时间窗口，单位是毫秒，默认是1000，即同时满足“被访问”与“在老生代停留时间超过1秒”两个条件，才会被插入到新生代头部。
 
 **innodb_buffer_pool总结**
-1）缓冲池(buffer pool)是一种常见的降低磁盘访问的机制；
-2）缓冲池通常以页(page)为单位缓存数据；
-3）缓冲池的常见管理算法是LRU，memcache，OS，InnoDB都使用了这种算法；
-4）InnoDB对普通LRU进行了优化：
+1）缓冲池(buffer pool)是一种常见的降低磁盘访问的机制；<br>
+2）缓冲池通常以页(page)为单位缓存数据；<br>
+3）缓冲池的常见管理算法是LRU，memcache，OS，InnoDB都使用了这种算法；<br>
+4）InnoDB对普通LRU进行了优化：<br>
 - 将缓冲池分为老生代和新生代，入缓冲池的页，优先进入老生代，页被访问，才进入新生代，以解决预读失效的问题
 - 页被访问，且在老生代停留时间超过配置阈值的，才进入新生代，以解决批量数据访问，大量热数据淘汰的问题
 
