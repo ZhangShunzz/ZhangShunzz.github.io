@@ -3,7 +3,7 @@ layout: post
 title:  Localtion URL的正则匹配规则
 date:   2018-10-10 09:32:00 +0800
 categories: 技术
-tag: nginx
+tag: Nginx
 ---
 
 

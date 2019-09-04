@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  Xtrbackup 备份 mysql
+title:  Xtrbackup 备份 Mysql
 date:   2018-08-22 17:13:00 +0800
 categories: 技术
-tag: [mysql,xtrbackup]
+tag: [Mysql,Xtrbackup]
 ---
 
 

@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  mysql基准测试与sysbench工具
+title:  Mysql基准测试与sysbench工具
 date:   2018-08-16 11:34:00 +0800
 categories: 技术
-tag: mysql
+tag: Mysql
 ---
 
 

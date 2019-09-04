@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  mysql explain分析sql 
+title:  Mysql explain分析sql 
 date:   2018-10-20 23:53:00 +0800
 categories: 技术
-tag: mysql
+tag: Mysql
 ---
 
 

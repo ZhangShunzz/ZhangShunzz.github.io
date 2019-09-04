@@ -3,7 +3,7 @@ layout: post
 title:  kubeadm部署kubernetes1.13.2
 date:   2019-01-27 09:55:00 +0800
 categories: 技术
-tag: kubernetes
+tag: Kubernetes
 ---
 
 1、配置解析

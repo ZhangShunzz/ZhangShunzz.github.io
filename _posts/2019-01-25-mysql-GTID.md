@@ -3,7 +3,7 @@ layout: post
 title:  Mysql GTID
 date:   2019-01-25 09:55:00 +0800
 categories: 技术
-tag: mysql
+tag: Mysql
 ---
 
 ### 什么是GTID Replication

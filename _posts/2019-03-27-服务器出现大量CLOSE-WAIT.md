@@ -18,13 +18,13 @@ tag: 故障
 - `netstat -n | awk '/^tcp/ {++S[$NF]} END {for(a in S) print a, S[a]}'`查看tcp连接状态发现出现大量CLOSE_WAIT
 
 
-![大量CLOSE_WAIT](/2019-03-27-服务器出现大量CLOSE-WAIT/CLOSE_WAIT02.png)
+![大量CLOSE_WAIT](/img/in-post/2019-03-27-服务器出现大量CLOSE-WAIT/CLOSE_WAIT02.png)
 
 ### CLOSE_WAIT
 
 所谓 CLOSE_WAIT，借用某位大牛的话来说应该倒过来叫做 WAIT_CLOSE，也就是说「等待关闭」，**TCP关闭连接时的图例：**
 
-![TCP关闭连接](/2019-03-27-服务器出现大量CLOSE-WAIT/CLOSE_WAIT01.png)
+![TCP关闭连接](/img/in-post/2019-03-27-服务器出现大量CLOSE-WAIT/CLOSE_WAIT01.png)
 
 
 首先主动关闭的一方发出 FIN 包，被动关闭的一方响应 ACK 包，此时，被动关闭的一方就进入了 CLOSE_WAIT 状态。如果一切正常，稍后被动关闭的一方也会发出 FIN 包，然后迁移到 LAST_ACK 状态。

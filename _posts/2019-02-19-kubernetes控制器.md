@@ -3,7 +3,7 @@ layout: post
 title:  k8s 控制器
 date:   2019-02-19 13:41:00 +0800
 categories: 技术
-tag: kubernetes
+tag: Kubernetes
 ---
 
 * content

@@ -3,7 +3,7 @@ layout: post
 title:  k8s Service
 date:   2019-02-21 21:43:00 +0800
 categories: 技术
-tag: kubernetes
+tag: Kubernetes
 ---
 
 ### Service

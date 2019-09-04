@@ -1,15 +1,15 @@
 ---
 layout: post
-title:  python脚本实现mysql增量备份 
+title:  Python脚本实现Mysql增量备份 
 date:   2018-12-17 14:30:00 +0800
 categories: 技术
-tag: [python,mysql]
+tag: [Python,Mysql]
 ---
 
 
 **mydb.py**
 
-```
+```python
 #!/usr/bin/env python
 #coding=utf-8
 import MySQLdb as mdb
@@ -78,7 +78,7 @@ def getSchema(table):
 
 **syncData.py**
 
-```
+```python
 #!/usr/bin/env python
 #coding=utf-8
 import os
@@ -209,7 +209,7 @@ if(method == 'import'):
 
 **mail.py**
 
-```
+```python
 #!/usr/bin/env python
 #coding=utf-8
 from email.mime.text import MIMEText

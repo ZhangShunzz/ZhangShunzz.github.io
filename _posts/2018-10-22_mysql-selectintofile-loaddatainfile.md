@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  mysql增量备份的一种方法 selectintooutfile与loaddatainfile
+title:  Mysql增量备份的一种方法 selectintooutfile与loaddatainfile
 date:   2018-10-22 17:51:00 +0800
 categories: 技术
-tag: mysql
+tag: Mysql
 ---
 
 

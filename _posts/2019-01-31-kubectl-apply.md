@@ -3,7 +3,7 @@ layout: post
 title:  k8s yaml文件
 date:   2019-01-31 13:41:00 +0800
 categories: 技术
-tag: kubernetes
+tag: Kubernetes
 ---
 
 ### Pod资源
