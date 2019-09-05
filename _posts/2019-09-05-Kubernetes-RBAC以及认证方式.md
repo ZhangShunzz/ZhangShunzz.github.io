@@ -126,69 +126,62 @@ yaml:
 
 创建RoleBinding(即可通过zhuangshunzz用户使用kubectl访问当前名称空间下的pods,但是无法访问其他名称空间)<br>
 ```
-
 命令行：
-        kubectl create rolebinding zhangshun-read-pods --role=pods-reader --user=zhangshunzz --dry-run -o yaml
-        kubectl create rolebinding zhangshun-read-pods --clusterrole=cluster-reader --user=zhangshunzz --dry-run -o yaml    #使用RoleBinding来绑定ClusterRole
+	kubectl create rolebinding zhangshun-read-pods --role=pods-reader --user=zhangshunzz --dry-run -o yaml
+	kubectl create rolebinding zhangshun-read-pods --clusterrole=cluster-reader --user=zhangshunzz --dry-run -o yaml    #使用RoleBinding来绑定ClusterRole
 yaml:
-		apiVersion: rbac.authorization.k8s.io/v1
-		kind: RoleBinding
-		metadata:
-		  name: zhangshun-read-pods
-		  namespace: kube-system    #绑定在哪个名称空间，就在哪个名称空间生效!!
-		roleRef:
-		  apiGroup: rbac.authorization.k8s.io
-		  kind: Role
-  		  name: pods-reader
-		subjects:
-		- apiGroup: rbac.authorization.k8s.io
-  		  kind: User
-  		  name: zhangshunzz
-
+	apiVersion: rbac.authorization.k8s.io/v1
+	kind: RoleBinding
+	metadata:
+		name: zhangshun-read-pods
+		namespace: kube-system    #绑定在哪个名称空间，就在哪个名称空间生效!!
+	roleRef:
+		apiGroup: rbac.authorization.k8s.io
+		kind: Role
+  		name: pods-reader
+	subjects:
+	- apiGroup: rbac.authorization.k8s.io
+		kind: User
+		name: zhangshunzz
 ```
 
 创建ClusterRole<br>
 
 ```
-
 命令行：
-        kubectl create clusterrole cluster-reader --verb=get,list,watch --resource=pods --dry-run -o yaml
+	kubectl create clusterrole cluster-reader --verb=get,list,watch --resource=pods --dry-run -o yaml
 yaml:
-		apiVersion: rbac.authorization.k8s.io/v1
-		kind: ClusterRole
-		metadata:
-		  name: cluster-reader
-		rules:
-		- apiGroups:
-		  - ""
-		  resources:
-		  - pods
-		  verbs:
-		  - get
-		  - list
-		  - watch
-
+	apiVersion: rbac.authorization.k8s.io/v1
+	kind: ClusterRole
+	metadata:
+		name: cluster-reader
+	rules:
+	- apiGroups:
+		- ""
+		resources:
+		- pods
+		verbs:
+		- get
+		- list
+		- watch
 ```
 
 创建ClusterRoleBinding(集群中所有的pods资源都可以访问)<br>
 
 ```
-
 命令行：
-        kubectl create clusterrolebinding zhangshun-read-all-pods --cluster-role=cluster-reader --user=zhangshunzz --dry-run -o yaml
+	kubectl create clusterrolebinding zhangshun-read-all-pods --cluster-role=cluster-reader --user=zhangshunzz --dry-run -o yaml
 yaml：
-		apiVersion: rbac.authorization.k8s.io/v1beta1
-		kind: ClusterRoleBinding
-		metadata:
-		  creationTimestamp: null
-		  name: zhangshun-read-all-pods
-		roleRef:
-		  apiGroup: rbac.authorization.k8s.io
-		  kind: ClusterRole
-		  name: cluster-reader
-		subjects:
-		- apiGroup: rbac.authorization.k8s.io
-		  kind: User
-		  name: zhangshunzz
-
+	apiVersion: rbac.authorization.k8s.io/v1beta1
+	kind: ClusterRoleBinding
+	metadata:
+		name: zhangshun-read-all-pods
+	roleRef:
+		apiGroup: rbac.authorization.k8s.io
+		kind: ClusterRole
+		name: cluster-reader
+	subjects:
+	- apiGroup: rbac.authorization.k8s.io
+		kind: User
+		name: zhangshunzz
 ```
