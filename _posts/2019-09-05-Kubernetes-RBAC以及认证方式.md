@@ -40,7 +40,6 @@ kubectl也是一个k8s传统对象，查看`kubectl的config：kubectl config vi
 ![](/img/in-post/2019-09-05-Kubernetes-RBAC以及认证方式/Kubectl.png)
 
 ```
-
 新建一个kubectl认证：
     1、签发新的证书：
         (umask 077;openssl genrsa -out zhangshun.key 2048)    #创建新的证书私钥
@@ -55,7 +54,6 @@ kubectl也是一个k8s传统对象，查看`kubectl的config：kubectl config vi
         kubectl config set-context zhangshunzz@mycluster --cluster=kubernetes --user=zhangshunzz
     5、使用新的context：
         kubectl config use-context zhangshunzz@mycluster
-
 ```
 
 #### 认证流程
@@ -72,7 +70,6 @@ kubectl也是一个k8s传统对象，查看`kubectl的config：kubectl config vi
 1、RBAC：基于角色Role的授权检查
 
 ```
-
 客户端-->API server
   user：username、uid
   group：
@@ -89,7 +86,6 @@ kubectl也是一个k8s传统对象，查看`kubectl的config：kubectl config vi
   Subresource:
   Namespace
   API group
-
 ```
 
 当创建一个Pod时，默认在Volumes中挂载了default-token-xxxx的secret，里面包含连接APIServer的token，用于在当前名称空间(default)下的Pod连接APIServer并获取Pod自身相关属性。
@@ -98,22 +94,9 @@ kubectl也是一个k8s传统对象，查看`kubectl的config：kubectl config vi
 
 基于角色的权限访问控制（Role-Based Access Control）作为传统访问控制（自主访问，强制访问）的有前景的代替受到广泛的关注。<br>
 
-角色（role）<br>
-权限（permissions）
+RBAC包括Role、RoleBinding、ClusterRole、ClusterRoleBinding<br>
 
-```
-
-Role：
-  operations
-  objects
-
-RoleBinding：
-  user account OR service account
-  role
-
-ClusteRrole，ClusterRoleBinding
-
-```
+在Role中设置对资源(Pod、Service、Deployment等)的各种权限(Get、List、Watch、Delete等)，并通过RoleBinding绑定到用户资源(User、Group、ServiceAccount等)
 
 **RoleBinding限制在名称空间级别，ClusterRoleBinding属于集群级别、可以操作所有名称空间。**<br>
 **Role、ClusterRoleBinding绑定在哪个，就限制在哪个级别**
@@ -122,25 +105,23 @@ ClusteRrole，ClusterRoleBinding
 
 创建Role<br>
 ```
-
 命令行：
         kubectl create role pods-reader --verb=get,list,watch --resource=pods --dry-run -o yaml 
 yaml:
 		apiVersion: rbac.authorization.k8s.io/v1
 		kind: Role
 		metadata:
-  		  name: pods-reader
-  		  namespace: default
+  			name: pods-reader
+			namespace: default
 		rules:
 		- apiGroups:
-  		  - ""
-  		  resources:
-  		  - pods
-  		  verbs:
-  		  - get
-  		  - list
-  		  - watch
-
+  			- ""
+  			resources:
+  			- pods
+			verbs:
+			- get
+			- list
+			- watch
 ```
 
 创建RoleBinding(即可通过zhuangshunzz用户使用kubectl访问当前名称空间下的pods,但是无法访问其他名称空间)<br>
