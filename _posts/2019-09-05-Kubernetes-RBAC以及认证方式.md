@@ -36,7 +36,7 @@ Service Account为Pod中的进程和外部用户提供身份信息。所有的ku
 #### kubectl是如何认证的
 
 kubectl组件包括：clusters(集群)，users(用户)，contexts(上下文：表示哪个用户使用哪个集群)，current-context(当前使用的上下文)<br>
-kubectl也是一个k8s传统对象，查看`kubectl的config：kubectl config view`<br>
+kubectl也是一个k8s传统对象，查看kubectl的config：`kubectl config view`<br>
 ![](/img/in-post/2019-09-05-Kubernetes-RBAC以及认证方式/Kubectl.png)
 
 ```
@@ -99,11 +99,11 @@ RBAC包括Role、RoleBinding、ClusterRole、ClusterRoleBinding<br>
 在Role中设置对资源(Pod、Service、Deployment等)的各种权限(Get、List、Watch、Delete等)，并通过RoleBinding绑定到用户资源(User、Group、ServiceAccount等)
 
 **RoleBinding限制在名称空间级别，ClusterRoleBinding属于集群级别、可以操作所有名称空间。**<br>
-**Role、ClusterRoleBinding绑定在哪个，就限制在哪个级别**
+**Role、ClusterRole绑定在哪个，就限制在哪个级别**
 
 可以使用一个ClusterRole来绑定多个RoleBinding，也是限制在namespace级别下的，绑定哪个namespace就可以访问哪个，这样就不用每一个namespace下单独创建一个Role了。
 
-创建Role<br>
+**创建Role**<br>
 ```
 命令行：
 	kubectl create role pods-reader --verb=get,list,watch --resource=pods --dry-run -o yaml 
@@ -124,7 +124,7 @@ yaml:
 		- watch
 ```
 
-创建RoleBinding(即可通过zhuangshunzz用户使用kubectl访问当前名称空间下的pods,但是无法访问其他名称空间)<br>
+**创建RoleBinding**(即可通过zhuangshunzz用户使用kubectl访问当前名称空间下的pods,但是无法访问其他名称空间)<br>
 ```
 命令行：
 	kubectl create rolebinding zhangshun-read-pods --role=pods-reader --user=zhangshunzz --dry-run -o yaml
@@ -145,7 +145,7 @@ yaml:
 		name: zhangshunzz
 ```
 
-创建ClusterRole<br>
+**创建ClusterRole**<br>
 
 ```
 命令行：
@@ -166,7 +166,7 @@ yaml:
 		- watch
 ```
 
-创建ClusterRoleBinding(集群中所有的pods资源都可以访问)<br>
+**创建ClusterRoleBinding**(集群中所有的pods资源都可以访问)<br>
 
 ```
 命令行：
