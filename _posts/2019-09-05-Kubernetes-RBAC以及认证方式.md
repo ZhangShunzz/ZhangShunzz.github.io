@@ -18,17 +18,15 @@ Service Account为Pod中的进程和外部用户提供身份信息。所有的ku
 ![](/img/in-post/2019-09-05-Kubernetes-RBAC以及认证方式/ServiceAccount.png)
 
 ```
-
 创建Service Account：
 	命令行:
 		kubectl create serviceaccount mysa --dry-run -o yaml
 	yaml:
 		apiVersion: v1
-        kind: ServiceAccount
-        metadata:
-          creationTimestamp: null
-          name: test
-
+		kind: ServiceAccount
+		metadata:
+			creationTimestamp: null
+			name: test
 ```
 
 查看Service Account：`kubectl get serviceaccount --all-namespaces -o wide`<br>
