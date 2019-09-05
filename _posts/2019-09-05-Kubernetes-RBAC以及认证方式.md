@@ -106,22 +106,22 @@ RBAC包括Role、RoleBinding、ClusterRole、ClusterRoleBinding<br>
 创建Role<br>
 ```
 命令行：
-        kubectl create role pods-reader --verb=get,list,watch --resource=pods --dry-run -o yaml 
+	kubectl create role pods-reader --verb=get,list,watch --resource=pods --dry-run -o yaml 
 yaml:
-		apiVersion: rbac.authorization.k8s.io/v1
-		kind: Role
-		metadata:
-  			name: pods-reader
-			namespace: default
-		rules:
-		- apiGroups:
-  			- ""
-  			resources:
-  			- pods
-			verbs:
-			- get
-			- list
-			- watch
+	apiVersion: rbac.authorization.k8s.io/v1
+	kind: Role
+	metadata:
+		name: pods-reader
+		namespace: default
+	rules:
+	- apiGroups:
+		- ""
+		resources:
+		- pods
+		verbs:
+		- get
+		- list
+		- watch
 ```
 
 创建RoleBinding(即可通过zhuangshunzz用户使用kubectl访问当前名称空间下的pods,但是无法访问其他名称空间)<br>
