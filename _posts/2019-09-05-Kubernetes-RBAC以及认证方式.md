@@ -99,6 +99,7 @@ RBAC包括Role、RoleBinding、ClusterRole、ClusterRoleBinding<br>
 在Role中设置对资源(Pod、Service、Deployment等)的各种权限(Get、List、Watch、Delete等)，并通过RoleBinding绑定到用户资源(User、Group、ServiceAccount等)
 
 **RoleBinding限制在名称空间级别，ClusterRoleBinding属于集群级别、可以操作所有名称空间。**<br>
+
 **Role、ClusterRole绑定在哪个，就限制在哪个级别**
 
 可以使用一个ClusterRole来绑定多个RoleBinding，也是限制在namespace级别下的，绑定哪个namespace就可以访问哪个，这样就不用每一个namespace下单独创建一个Role了。
