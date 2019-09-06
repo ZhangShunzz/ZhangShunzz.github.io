@@ -51,7 +51,7 @@ kubectl也是一个k8s传统对象，查看kubectl的config：`kubectl config vi
     3、创建新的user(zhangshunzz)：
         kubectl config set-credentials zhangshunzz --client-certificate=/etc/kubernetes/test-ssl/zhangshun.crt --client-key=/etc/kubernetes/test-ssl/zhangshun.key --embed-certs=true    #--client-certificate：客户端证书，--client-key：客户端私钥
     4、创建contexts(上下文)：
-        kubectl config set-context zhangshunzz@mycluster --cluster=kubernetes --user=zhangshunzz
+        kubectl config set-context zhangshunzz@mycluster --cluster=mycluster --user=zhangshunzz
     5、使用新的context：
         kubectl config use-context zhangshunzz@mycluster
 ```
@@ -135,7 +135,7 @@ yaml:
 	kind: RoleBinding
 	metadata:
 		name: zhangshun-read-pods
-		namespace: kube-system    #绑定在哪个名称空间，就在哪个名称空间生效!!
+		namespace: default    #绑定在哪个名称空间，就在哪个名称空间生效!!
 	roleRef:
 		apiGroup: rbac.authorization.k8s.io
 		kind: Role
