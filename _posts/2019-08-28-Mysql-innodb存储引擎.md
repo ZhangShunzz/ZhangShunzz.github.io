@@ -125,6 +125,11 @@ B+ 树在查找对应的记录时，并不会直接从树中找出对应的行�
 
 Innodb使用undo、redo log来保证事务原子性、一致性和持久性，同时采用`预写日志`方式将随机写入变成顺序追加写入，提升事务性能。
 
+`innodb_flush_log_at_trx_commit`参数指定了 InnoDB 在事务提交后的日志写入频率。<br>
+1、当`innodb_flush_log_at_trx_commit`为0时，log buffer 会每秒写入到日志文件并刷写（flush）到磁盘。但每次事务提交不会有任何影响，也就是 log buffer 的刷写操作和事务提交操作没有关系。<br>
+2、当`innodb_flush_log_at_trx_commit`为1时，每次事务提交时，log buffer 会被写入到日志文件并刷写到磁盘。<br>
+3、当`innodb_flush_log_at_trx_commit`为2时，每次事务提交会写入日志文件，但并不会立即刷写到磁盘，日志文件会每秒刷写一次到磁盘。
+
 (1)**Undo log**
 `Undo log`主要是为了实现事务的原子性，在Mysql数据库Innodb存储引擎中，还用`Undo log`来实现多版本并发控制(简称：MVCC)。
 `Undo log`的原理很简单，就是记录事务变更前的状态，为了满足事务的原子性，在操作任何数据之前，首先将数据备份到一个地方，也就是`Undo log`，然后进行数据的修改。如果出现了错误或者用户执行了ROLLBACK语句，系统可以利用`Undo log`中的备份将数据恢复到事务开始之前的状态。
@@ -136,7 +141,6 @@ Innodb使用undo、redo log来保证事务原子性、一致性和持久性，�
 
 注意是先写redo buffer，然后再修改buffer cachez中的页，因为修改是以页为单位的，所以先写redo才能保证一个大事务commit的时候，redo已经刷新的差不多了。反过来说，如果是先写buffer cache中的页，然后再写redo buffer，就可能会有很多的redo需要写，因为一个页可能有很多行数据；而很多行数据产生的redo也可能比较多，那么commit的时候，就会有很多redo需要写。
 
-和`Undo log`相反，`Redo log`记录的是新数据的备份。在事务提交前，只要将`Redo log`持久化即可，不需要将数据持久化，当系统崩溃时，虽然数据没有持久化，但是`Redo log`已经持久化。系统可以根据`Redo log`的内容，将所有数据恢复到最新的状态。
 需要注意的是，事务过程中，先把redo写进redo log buffer中，然后Mysql后台进程page cleaner thread适当的去刷新redo到`redo log`中永久保存。
 
 (3)**checkpoint**
