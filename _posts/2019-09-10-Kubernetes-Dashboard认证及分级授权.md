@@ -12,6 +12,12 @@ tags:
 #### 部署
 
 github地址：https://github.com/kubernetes/dashboard<br>
-部署：<br>`kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml`
+部署：<br>
+```shell
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
+```
 
 将service改为NodePort<br>
+```shell
+kubectl patch svc kubernetes-dashboard -p '{"spec":{"type":"NodePort"}}' -n kube-system
+```
