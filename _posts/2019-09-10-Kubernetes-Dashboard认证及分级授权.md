@@ -28,29 +28,29 @@ Dashboard登陆时的两种认证方式:token、config<br>
 认证时的账号必须为ServiceAccount：被dashboard pod拿来由kubernetes进行认证；
 
 一、token
-1. 查看dashboard的pod名称:
+1. 查看dashboard的pod名称:<br>
 **kubectl get pods -n kube-system**
-2. 查看dashboard pod使用的ServiceAccount:
+2. 查看dashboard pod使用的ServiceAccount:<br>
 **kubectl get pods kubernetes-dashboard-57df4db6b-9d6m5 -n kube-system -o yaml**
-3. 查看dashboard pod使用的ServiceAccount的token名称:
+3. 查看dashboard pod使用的ServiceAccount的token名称:<br>
 **kubectl get secret -n kube-system**
-4. 获取登陆dashboard的token信息:
+4. 获取登陆dashboard的token信息:<br>
 **kubectl describe secret kubernetes-dashboard-token-4w656 -n kube-system**
 
 二、config
 需要创建一个dashboard config并导入<br>
-1. 新建一个kubectl 集群并保存在config文件：
+1. 新建一个kubectl 集群并保存在config文件：<br>
 **kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/ca.pem --server="https://192.168.0.222:6443" --embed-certs=true --kubeconfig=/tmp/def-ns-admin.conf**
-查看config文件的配置:
+查看config文件的配置:<br>
 **kubectl config view --kubeconfig=/tmp/def-ns-admin.conf**
-2. 新建一个ServiceAccount，并获取其token信息:
-**kubectl create seriveaccount kubernetes-dashboard -n kube-system**
+2. 新建一个ServiceAccount，并获取其token信息:<br>
+**kubectl create seriveaccount kubernetes-dashboard -n kube-system**<br>
 **kubectl describe secret kubernetes-dashboard-token-4w656 -n kube-system**
-3. 新建kubectl config的用户:
+3. 新建kubectl config的用户:<br>
 **kubectl config set-credentials def-ns-admin --token=$TOKEN_INFO --kubeconfig=/tmp/def-ns-admin.conf**
-4. 新建context:
+4. 新建context:<br>
 **kubectl config set-context def-ns-admin@kubernetes --cluster=kubernetes --user=def-ns-admin --kubeconfig=/tmp/def-ns-admin.conf**
-5. 设置当前context:
+5. 设置当前context:<br>
 **kubectl config use-context def-ns-admin@kubernetes --kubeconfig=/tmp/def-ns-admin.conf**
 6. 导出def-ns-admin.conf，并在登陆dashboard时导入即可
 
