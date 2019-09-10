@@ -44,6 +44,10 @@ Dashboard登陆时的两种认证方式:token、config<br>
 
 #### 如何只通过dashboard管理特定的namespace(default)？
 
+`RoloBinding`可以将角色中定义的权限授予用户或用户组，`RoleBinding`包含一组权限列表(subjects)，权限列表中包含有不同形式的待授予权限资源类型(users、groups、service accounts)，`RoleBinding`适用于某个命名空间内授权，而 `ClusterRoleBinding`适用于集群范围内的授权。<br>
+
+`RoleBinding`同样可以引用`ClusterRole`来对当前 namespace 内用户、用户组或 ServiceAccount 进行授权，这种操作允许集群管理员在整个集群内定义一些通用的 ClusterRole，然后在不同的 namespace 中使用 RoleBinding 来引用
+
 1、在对应的名称空间下，创建一个专有的ServiceAccount。<br>
 `kubectl create serviceaccount def-ns-admin -n default`<br>
 2、创建一个新的RoleBinding，将ClusterRole绑定到RoleBinding上并赋予ServiceAccount，**RoleBinding限制dashboard管理的namespace**。<br>
