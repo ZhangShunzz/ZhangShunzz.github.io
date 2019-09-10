@@ -44,15 +44,17 @@ Dashboard登陆时的两种认证方式:token、config<br>
 
 #### 如何只通过dashboard管理特定的namespace(default)？
 
-1、在对应的名称空间下，创建一个专有的ServiceAccount。
-- `kubectl create serviceaccount def-ns-admin -n default`<br>
-2、创建一个新的RoleBinding，将ClusterRole绑定到RoleBinding上并赋予ServiceAccount，**RoleBinding限制dashboard管理的namespace**。
-- `kubectl create rolebinding def-ns-admin --clusterrole=admin --serviceaccount=default:def-ns-admin`<br>
-3、查看token名称。
-- `kubectl get secret -n default`<br>
-4、查看token数据，并使用该token登陆。
-- `kubectl describe secret def-ns-admin-token-d5f2d -n default`<br>
+1、在对应的名称空间下，创建一个专有的ServiceAccount。<br>
+`kubectl create serviceaccount def-ns-admin -n default`
+2、创建一个新的RoleBinding，将ClusterRole绑定到RoleBinding上并赋予ServiceAccount，**RoleBinding限制dashboard管理的namespace**。<br>
+`kubectl create rolebinding def-ns-admin --clusterrole=admin --serviceaccount=default:def-ns-admin`
+3、查看token名称。<br>
+`kubectl get secret -n default`
+4、查看token数据，并使用该token登陆。<br>
+`kubectl describe secret def-ns-admin-token-d5f2d -n default`
 #### patch打补丁
 
 可以先定义好yaml文件，使用patch覆盖之前的配置<br>
-- `kubectl patch clusterrole cluster-reader --type merge -p "\`cat /tmp/patch.yaml\`"`
+```
+kubectl patch clusterrole cluster-reader --type merge -p "\`cat /tmp/patch.yaml\`"
+```
