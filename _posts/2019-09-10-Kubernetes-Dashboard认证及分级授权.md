@@ -17,7 +17,7 @@ github地址：https://github.com/kubernetes/dashboard<br>
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v1.10.1/src/deploy/recommended/kubernetes-dashboard.yaml
 ```
 
-将service改为NodePort<br>
+将service改为NodePort
 ```shell
 kubectl patch svc kubernetes-dashboard -p '{"spec":{"type":"NodePort"}}' -n kube-system
 ```
