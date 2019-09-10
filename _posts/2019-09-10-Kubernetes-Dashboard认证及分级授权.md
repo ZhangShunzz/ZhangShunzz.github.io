@@ -60,5 +60,5 @@ Dashboard登陆时的两种认证方式:token、config<br>
 
 可以先定义好yaml文件，使用patch覆盖之前的配置<br>
 ```
-kubectl patch clusterrole cluster-reader --type merge -p "\`cat /tmp/patch.yaml\`"
+kubectl patch clusterrole cluster-reader --type merge -p "`cat /tmp/patch.yaml`"
 ```
