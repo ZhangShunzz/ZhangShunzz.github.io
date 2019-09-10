@@ -28,8 +28,7 @@ Dashboard登陆时的两种认证方式:token、config<br>
 认证时的账号必须为ServiceAccount：被dashboard pod拿来由kubernetes进行认证；
 
 一、token
-1. 查看dashboard的pod名称<br>
-kubectl get pods -n kube-system
+1. 查看dashboard的pod名称:kubectl get pods -n kube-system
 2. 查看dashboard pod使用的ServiceAccount:`kubectl get pods kubernetes-dashboard-57df4db6b-9d6m5 -n kube-system -o yaml`
 3. 查看dashboard pod使用的ServiceAccount的token名称:`kubectl get secret -n kube-system`
 4. 获取登陆dashboard的token信息:`kubectl describe secret kubernetes-dashboard-token-4w656 -n kube-system`
