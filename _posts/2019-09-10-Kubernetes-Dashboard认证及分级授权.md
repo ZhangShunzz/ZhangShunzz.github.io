@@ -27,13 +27,13 @@ kubectl patch svc kubernetes-dashboard -p '{"spec":{"type":"NodePort"}}' -n kube
 Dashboard登陆时的两种认证方式:token、config<br>
 认证时的账号必须为ServiceAccount：被dashboard pod拿来由kubernetes进行认证；
 
-一、token<br>
+一、token
 1. 查看dashboard的pod名称:`kubectl get pods -n kube-system`
 2. 查看dashboard pod使用的ServiceAccount:`kubectl get pods kubernetes-dashboard-57df4db6b-9d6m5 -n kube-system -o yaml`
 3. 查看dashboard pod使用的ServiceAccount的token名称:`kubectl get secret -n kube-system`
 4. 获取登陆dashboard的token信息:`kubectl describe secret kubernetes-dashboard-token-4w656 -n kube-system`
 
-二、config<br>
+二、config
 需要创建一个dashboard config并导入<br>
 1. 新建一个kubectl 集群并保存在config文件：`kubectl config set-cluster kubernetes --certificate-authority=/etc/kubernetes/ssl/ca.pem --server="https://192.168.0.222:6443" --embed-certs=true --kubeconfig=/tmp/def-ns-admin.conf`<br>查看config文件的配置:`kubectl config view --kubeconfig=/tmp/def-ns-admin.conf`
 2. 新建一个ServiceAccount，并获取其token信息:`kubectl create seriveaccount kubernetes-dashboard -n kube-system`<br>`kubectl describe secret kubernetes-dashboard-token-4w656 -n kube-system`
