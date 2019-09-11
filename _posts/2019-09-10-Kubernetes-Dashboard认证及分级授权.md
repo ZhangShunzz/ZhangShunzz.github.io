@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Kubernetes——Dashboard认证及分级授权"
+title: "Kubernetes:Dashboard认证及分级授权"
 subtitle: "Kubernetes Dashboard就是k8s集群的webui，集合了所有命令行可以操作的所有命令。"
 author: "zhangshun"
 header-img: "img/background/15.jpg"

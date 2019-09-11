@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Kubernetes——RBAC以及认证方式"
+title: "Kubernetes：RBAC以及认证方式"
 subtitle: "基于角色的权限访问控制（Role-Based Access Control）作为传统访问控制（自主访问，强制访问）的有前景的代替受到广泛的关注。"
 author: "zhangshun"
 header-img: "img/background/14.jpg"
