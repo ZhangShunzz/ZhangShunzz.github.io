@@ -74,3 +74,5 @@ Dashboard登陆时的两种认证方式:token、config<br>
 ```
 kubectl patch clusterrole cluster-reader --type merge -p "`cat /tmp/patch.yaml`"
 ```
+
+
