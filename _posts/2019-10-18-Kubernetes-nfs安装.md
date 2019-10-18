@@ -18,7 +18,7 @@ NFS需要nfs-utils和rpcbind两个包, 但安装nfs-utils时会一起安装上rp
 **编辑exports文件**<br>
 编辑`/etc/exports`文件添加共享目录，每个目录的设置独占一行，每行共三部分, 前边是目录, 后边是客户机, 括号中是配置参数. 编写格式如下：<br>
 `NFS共享目录路径 客户机IP或者名称(参数1,参数2,...,参数n)`<br>
-例如：<br>
+例如：
 ```
 # example: /home/nfs 192.168.64.134(rw,sync,fsid=0)  192.168.64.135(rw,sync,fsid=0)   
 # 第一部分: /home/nfs, 本地要共享出去的目录。
@@ -32,17 +32,17 @@ NFS需要nfs-utils和rpcbind两个包, 但安装nfs-utils时会一起安装上rp
 
 /home/nfs *(rw,sync,no_root_squash)
 ```
-**设置开机自启动**<br>
+**设置开机自启动**
 ```
 systemctl enable rpcbind.service
 systemctl enable nfs-server.service
 ```
-**启动**<br>
+**启动**
 ```
 service nfs-server start
 service rpcbind start
 ```
-**查看nfs运行**<br>
+**查看nfs运行**
 ```
 [root@localhost ~]# rpcinfo -p
    program vers proto   port  service
@@ -74,11 +74,11 @@ service rpcbind start
     100021    4   tcp  42391  nlockmgr
 ```
 **关闭防火墙**<br>
-`systemctl stop firewalld.service`<br>
+`systemctl stop firewalld.service`
 ### 客户端<br>
 客户端不需要启动服务, 只下载nfs工具:<br>
 `yum install nfs-utils`<br>
-**客户端验证**<br>
+**客户端验证**
 ```
 [root@localhost ~]# showmount -e 192.168.64.133
 Export list for 192.168.64.133:
