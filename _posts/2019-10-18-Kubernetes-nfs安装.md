@@ -32,17 +32,16 @@ NFS需要nfs-utils和rpcbind两个包, 但安装nfs-utils时会一起安装上rp
 
 /home/nfs *(rw,sync,no_root_squash)
 ```
-<br>
 **设置开机自启动**<br>
 ```
 systemctl enable rpcbind.service
 systemctl enable nfs-server.service
-```<br>
+```
 **启动**<br>
 ```
 service nfs-server start
 service rpcbind start
-```<br>
+```
 **查看nfs运行**<br>
 ```
 [root@localhost ~]# rpcinfo -p
@@ -73,7 +72,7 @@ service rpcbind start
     100021    1   tcp  42391  nlockmgr
     100021    3   tcp  42391  nlockmgr
     100021    4   tcp  42391  nlockmgr
-```<br>
+```
 **关闭防火墙**<br>
 `systemctl stop firewalld.service`<br>
 ### 客户端<br>
@@ -84,7 +83,7 @@ service rpcbind start
 [root@localhost ~]# showmount -e 192.168.64.133
 Export list for 192.168.64.133:
 /home/nfs *
-```<br>
+```
 **客户端挂载**<br>
 使用 mount 命令将NFS服务器的/home/nfs挂载到客户端的/kubernetes目录。可以在客户端终端输入如下命令：<br>
 `mount 192.168.64.133:/home/nfs /kubernetes`<br>
