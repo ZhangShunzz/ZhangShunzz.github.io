@@ -75,7 +75,9 @@ service rpcbind start
 ```
 **关闭防火墙**<br>
 `systemctl stop firewalld.service`
+
 ### 客户端<br>
+
 客户端不需要启动服务, 只下载nfs工具:<br>
 `yum install nfs-utils`<br>
 **客户端验证**
