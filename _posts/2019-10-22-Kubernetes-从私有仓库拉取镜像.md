@@ -14,6 +14,7 @@ tags:
 - harbor镜像仓库，本文harbor部署在kubernetes集群外
 - 在node上修改/etc/docker/dameon.json，可以将harbor地址添加信任，无需https
 ### docker-compose方式安装harbor
+
 下载安装包： `wget https://storage.googleapis.com/harbor-releases/harbor-offline-installer-v1.5.2.tgz`<br>
 解压： `tar zxf harbor-offline-installer-v1.5.2.tgz`<br>
 修改harbor配置文件：
@@ -34,7 +35,6 @@ vim /etc/docker/daemon.json
   ...
 }
 ```
-
 ### 为k8s集群创建Secret
 
 有两种方式创建Secret
@@ -59,4 +59,27 @@ data:
 type:
   kubernetes.io/dockerconfigjson
 ```
+### 部署测试pod
 
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: raptor
+  name: raptor
+  namespace: int
+spec:
+  containers:
+    image: 192.168.0.109/dev/test-tomcat:20191022
+    imagePullPolicy: Always
+    name: raptor
+  nodeName: 192.168.0.223
+  imagePullSecrets:
+  - name: harbor-key
+```
+
+### dashboard查看状态
+
+![](/img/in-post/2019-10-22-Kubernetes-从私有仓库拉取镜像/Dashboard1.png)
+![](/img/in-post/2019-10-22-Kubernetes-从私有仓库拉取镜像/Dashboard2.png)
