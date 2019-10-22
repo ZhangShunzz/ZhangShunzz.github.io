@@ -60,7 +60,8 @@ type:
   kubernetes.io/dockerconfigjson
 ```
 ### 部署测试pod
-
+**imagePullSecrets标签指定拉取镜像时的身份验证信息**
+vim int-raptor.yaml
 ```
 apiVersion: v1
 kind: Pod
