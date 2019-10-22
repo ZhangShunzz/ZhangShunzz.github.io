@@ -16,10 +16,8 @@ tags:
 
 ### docker-compose方式安装harbor
 
-下载安装包： `wget https://storage.googleapis.com/harbor-releases/harbor-offline-installer-v1.5.2.tgz`
-
-解压： `tar zxf harbor-offline-installer-v1.5.2.tgz`
-
+下载安装包： `wget https://storage.googleapis.com/harbor-releases/harbor-offline-installer-v1.5.2.tgz`<br>
+解压： `tar zxf harbor-offline-installer-v1.5.2.tgz`<br>
 修改harbor配置文件：
 ```
 vim harbor.cfg
@@ -28,11 +26,9 @@ hostname = 192.168.0.109
 harbor_admin_password = 123456    #harbor管理员密码
 db_password = root123    #mysql管理员密码
 ```
-
 安装：`./install.sh`（需提前安装docker-ce跟docker-compose）<br>
 yum -y install docker-ce<br>
 yum -y install docker-compose<br>
-
 使用http协议，客户端需要将harbor地址加入/etc/docker/daemon.json
 ```
 vim /etc/docker/daemon.json
