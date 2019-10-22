@@ -13,6 +13,7 @@ tags:
 - kubernetes集群
 - harbor镜像仓库，本文harbor部署在kubernetes集群外
 - 在node上修改/etc/docker/dameon.json，可以将harbor地址添加信任，无需https
+
 ### docker-compose方式安装harbor
 
 下载安装包： `wget https://storage.googleapis.com/harbor-releases/harbor-offline-installer-v1.5.2.tgz`<br>
@@ -35,10 +36,11 @@ vim /etc/docker/daemon.json
   ...
 }
 ```
+
 ### 为k8s集群创建Secret
 
 有两种方式创建Secret
-1. kubectl命令行创建
+1. kubectl命令行创建<br>
 当pod从私用仓库拉取镜像时，k8s集群使用类型为docker-registry的Secret来提供身份认证，创建一个名为harbor-kry的Secret，执行如下命令:
 ```
 kubectl -n int create secret docker-registry harbor-key \
@@ -59,8 +61,10 @@ data:
 type:
   kubernetes.io/dockerconfigjson
 ```
+
 ### 部署测试pod
-**imagePullSecrets标签指定拉取镜像时的身份验证信息**
+
+**imagePullSecrets标签指定拉取镜像时的身份验证信息**<br>
 vim int-raptor.yaml
 ```
 apiVersion: v1
