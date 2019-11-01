@@ -9,7 +9,6 @@ tags:
 ---
 
 ### ~~一段复制的nginx-ingress介绍~~
-
 nginx-ingress 和 traefik 都是比如热门的 ingress-controller，作为反向代理将外部流量导入集群内部，将 Kubernetes 内部的 Service 暴露给外部，在 Ingress 对象中通过域名匹配 Service，这样就可以直接通过域名访问到集群内部的服务了。相对于 traefik 来说，nginx-ingress 性能更加优秀，但是配置比 traefik 要稍微复杂一点，当然功能也要强大一些，支持的功能多许多，今天为大家介绍下 nginx-ingress 在 Kubernetes 中的安装使用。
 
 ### Ingress Controller
