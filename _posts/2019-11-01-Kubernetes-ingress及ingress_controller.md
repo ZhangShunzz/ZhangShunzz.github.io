@@ -79,7 +79,7 @@ Events:
   ----     ------            ----                   ----               -------
   Warning  FailedScheduling  3m13s (x3 over 3m25s)  default-scheduler  0/2 nodes are available: 2 node(s) didn't match node selector.
 ```
-原因：查看mandatory.yaml发现,nodeselector有配置标签选择器。
+原因：查看mandatory.yaml发现,nodeselector有配置标签选择器。<br>
 解决办法：node节点添加标签
 `kubectl label nodes 192.168.0.223 kubernetes.io/os=linux`
 
@@ -88,7 +88,7 @@ Events:
 ![](/img/in-post/2019-11-01-Kubernetes-ingress及ingress_controller/dashboard-ingress-nginx.png)
 
 ### 测试
-创建后端service跟pod
+**创建后端service跟pod**
 ```
 apiVersion: v1
 kind: Service
@@ -134,7 +134,7 @@ spec:
       imagePullSecrets:
       - name: harbor-key
 ```
-创建ingress
+**创建ingress**
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -159,10 +159,10 @@ spec:
 
 ### https测试
 
-创建secret：
+**创建secret**：
 `kubectl create secret tls web-test-ingress-secret --cert=intellicre.crt --key=intellicredit.cn.key -n int`
 
-创建ingress
+**创建ingress**
 ```
 apiVersion: extensions/v1beta1
 kind: Ingress
