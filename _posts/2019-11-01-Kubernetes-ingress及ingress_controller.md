@@ -12,11 +12,11 @@ tags:
 nginx-ingress 和 traefik 都是比如热门的 ingress-controller，作为反向代理将外部流量导入集群内部，将 Kubernetes 内部的 Service 暴露给外部，在 Ingress 对象中通过域名匹配 Service，这样就可以直接通过域名访问到集群内部的服务了。相对于 traefik 来说，nginx-ingress 性能更加优秀，但是配置比 traefik 要稍微复杂一点，当然功能也要强大一些，支持的功能多许多，今天为大家介绍下 nginx-ingress 在 Kubernetes 中的安装使用。
 
 ### Ingress Controller
-定义Ingress并注入到Ingress Controlle中
+定义Ingress并**实时**注入到Ingress Controlle中
 
 nginx-ingress-controller是一个运行nginx服务的pod
 
-请求先经过ingress-nginx的service，然后将请求交给nginx-ingress-controller，nginx-ingress-controller通过ingress中的配置，将流量转发到对应的Headless Service，再由Headless Service转发到pod中
+**请求先经过ingress-nginx的service，然后将请求交给nginx-ingress-controller，nginx-ingress-controller通过ingress中的配置，将流量转发到对应的Headless Service，再由Headless Service转发到pod中**
 ![](/img/in-post/2019-11-01-Kubernetes-ingress及ingress_controller/ingress请求流程图.png)
 
 ### ingress安装
