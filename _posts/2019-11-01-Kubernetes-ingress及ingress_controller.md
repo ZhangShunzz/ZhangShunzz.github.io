@@ -9,7 +9,7 @@ tags:
 ---
 
 ### Ingress Controller
-定义Ingress并注入到Ingress Controlle的pod中
+定义Ingress并注入到Ingress Controlle中
 
 ingress-nginx-controller是一个运行nginx服务的pod
 
