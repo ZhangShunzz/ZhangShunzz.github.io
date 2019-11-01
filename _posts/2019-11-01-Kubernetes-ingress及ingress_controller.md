@@ -90,6 +90,7 @@ Events:
 ### 测试
 **创建后端service跟pod**
 ```
+[root@master ingress-test]# cat web-test-deployment.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -136,6 +137,7 @@ spec:
 ```
 **创建ingress**
 ```
+[root@master ingress-test]# cat ingress-web-test.yaml 
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -164,6 +166,7 @@ spec:
 
 **创建ingress**
 ```
+[root@master https]# cat ingress-web-test-https.yaml 
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
