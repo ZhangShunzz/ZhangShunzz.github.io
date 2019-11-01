@@ -49,7 +49,7 @@ spec:
     nodePort: 30443
 ```
 
-**安装时遇到的报错**
+**安装时遇到的报错**<br>
 1、报错：
 ```
 [root@master ingress-nginx]# kubectl get all -n ingress-nginx
