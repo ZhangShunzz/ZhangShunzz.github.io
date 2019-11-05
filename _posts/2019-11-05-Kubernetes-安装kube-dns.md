@@ -20,7 +20,7 @@ tags:
 该路径下有三个相似的配置文件：<br>
 - kube-dns.yaml.base  
 - kube-dns.yaml.in  
-- kube-dns.yaml.sed 
+- kube-dns.yaml.sed <br>
 在此，我们使用kube-dns.yaml.sed配置文件作为模板；
 
 需要提前准备镜像：
@@ -30,12 +30,12 @@ tags:
 
 ##### 1.2 需要修改其中的三个属性
 
-`mv kube-dns.yaml.sed kube-dns.yaml`
-`sed -i 's/$DNS_SERVER_IP/10.10.10.2/g' kube-dns.yaml`
-`sed -i 's/$DNS_DOMAIN/cluster.local/g' kube-dns.yaml`
-`sed -i 's/$DNS_MEMORY_LIMIT/1000Mi/g' kube-dns.yaml`
+`mv kube-dns.yaml.sed kube-dns.yaml`<br>
+`sed -i 's/$DNS_SERVER_IP/10.10.10.2/g' kube-dns.yaml`<br>
+`sed -i 's/$DNS_DOMAIN/cluster.local/g' kube-dns.yaml`<br>
+`sed -i 's/$DNS_MEMORY_LIMIT/1000Mi/g' kube-dns.yaml`<br>
 
 ##### 1.3 创建dns服务
 
-**kubectl create -f kube-dns.yaml  **
+**kubectl create -f kube-dns.yaml**
 
