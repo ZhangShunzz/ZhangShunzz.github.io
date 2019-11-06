@@ -35,7 +35,13 @@ vim /etc/docker/daemon.json
   "insecure-registries": ["192.168.0.109"]
   ...
 }
+
+systemctl restart docker
 ```
+
+**访问harbor的地址：http://10.0.18.109**
+
+在harbor中创建项目dev，将镜像打标签**docker tag tomcat：latest 192.168.0.109/dev/tomcat-test:0.0.1**，上传到harbor：**docker push 192.168.0.109/dev/tomcat-test:0.0.1**
 
 ### 为k8s集群创建Secret
 
