@@ -43,7 +43,7 @@ systemctl restart docker
 
 在harbor中创建项目dev，将镜像打标签**docker tag tomcat：latest 192.168.0.109/dev/tomcat-test:0.0.1**，上传到harbor：**docker push 192.168.0.109/dev/tomcat-test:0.0.1**
 
-### 为k8s集群创建Secret
+### k8s通过secret连接harbor，为k8s集群创建Secret
 
 有两种方式创建Secret
 1. kubectl命令行创建<br>
@@ -86,7 +86,7 @@ spec:
     imagePullPolicy: Always
     name: raptor
   nodeName: 192.168.0.223
-  imagePullSecrets:
+  imagePullSecrets:		//连接harbor时使用的secret
   - name: harbor-key
 ```
 
