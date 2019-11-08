@@ -84,7 +84,7 @@ spec:
       storage: 20Gi
 EOF
 ```
-需要修改/data/kubernetes/jenkins的权限，`chmod 777 -R /data/kubernetes/jenkins`
+需要修改/data/kubernetes/jenkins的权限，`chmod 777 -R /data/kubernetes/jenkins`<br>
 4.准备ServiceAccount，赋予权限<br>
 这里还需要使用到一个拥有相关权限的 serviceAccount：jenkins，我们这里只是给 jenkins 赋予了一些必要的权限
 ```
