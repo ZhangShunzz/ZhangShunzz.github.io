@@ -267,3 +267,6 @@ kubectl apply -f jenkins_deployment.yaml
 Please wait while Jenkins is getting ready to work …<br>
 Your browser will reload automatically when Jenkins is ready.<br>
 **解法方法：**进入jenkins的工作目录，打开hudson.model.UpdateCenter.xml，将 http://updates.jenkins-ci.org/update-center.json 修改成 http://mirror.xmission.com/jenkins/updates/update-center.json
+2.访问https://jenkins.intellicredit.cn:30443  浏览器界面一直显示：<br>
+“该jenkins实例似乎已离线” 
+**解法方法**：进入jenkins的工作目录，修改${JENKINS_HOME}/updates/default.json，将www.google.com修改为www.baidu.com
