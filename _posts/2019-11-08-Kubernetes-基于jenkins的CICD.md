@@ -429,3 +429,5 @@ ADD APP /usr/local/tomcat/webapps/ROOT/
 
 WORKDIR /usr/local/tomcat/bin
 ```
+
+**测试流程：修改APP目录下的index.html \—\—\> git push \—\—\> jenkins-master pipeline build \—\—\> Clone、Build Image、Push Image、Deploy Yaml \—\—\> 测试页面是否修改**
