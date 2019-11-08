@@ -52,4 +52,200 @@ type:
 [root@master jenkins]# kubectl create secret tls jenkins-cert --cert=certs/intellicre.crt --key=certs/intellicredit.cn.key -n jenkins
 ```
 `~/.docker/config.json`为docker login的认证文件，base64加密后生成密钥<br>
-`certs/intellicre.crt`、`certs/intellicredit.cn.key`分别是ssl认证时的证书跟密钥
+`certs/intellicre.crt`、`certs/intellicredit.cn.key`分别是ssl认证时的证书跟密钥<br>
+3.**创建pv/pvc持久化存储数据**<br>
+我们将容器的 /var/jenkins_home 目录挂载到了一个名为 opspvc 的 PVC 对象上面，所以我们同样还得提前创建一个对应的 PVC 对象，我们可以使用 StorageClass 对象来自动创建。
+```
+cat >/opt/jenkins/jenkins_pv.yaml <<EOF
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: opspv
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+  - ReadWriteMany
+  persistentVolumeReclaimPolicy: Delete
+  nfs:
+    server: 192.168.0.222
+    path: /data/kubernetes/jenkins
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: opspvc
+  namespace: jenkins
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 20Gi
+EOF
+```
+4.**创建ServiceAccount，赋予权限**<br>
+这里还需要使用到一个拥有相关权限的 serviceAccount：jenkins，我们这里只是给 jenkins 赋予了一些必要的权限
+```
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jenkins
+  namespace: jenkins
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: jenkins
+rules:
+  - apiGroups: ["extensions", "apps"]
+    resources: ["deployments"]
+    verbs: ["create", "delete", "get", "list", "watch", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["services"]
+    verbs: ["create", "delete", "get", "list", "watch", "patch", "update"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create","delete","get","list","patch","update","watch"]
+  - apiGroups: [""]
+    resources: ["pods/exec"]
+    verbs: ["create","delete","get","list","patch","update","watch"]
+  - apiGroups: [""]
+    resources: ["pods/log"]
+    verbs: ["get","list","watch"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRoleBinding
+metadata:
+  name: jenkins
+  namespace: jenkins
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: jenkins
+subjects:
+  - kind: ServiceAccount
+    name: jenkins
+    namespace: jenkins
+```
+5.**安装jenkins-master Deployment**
+```
+vim /opt/jenkins/jenkins_deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: jenkins         #deployment名称
+  namespace: jenkins      #命名空间
+spec:
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      terminationGracePeriodSeconds: 10     #优雅停止pod
+      serviceAccount: jenkins               #后面还需要创建服务账户
+      containers:
+      - name: jenkins
+        image: 192.168.0.109/jenkins/jenkins:0.0.1               #镜像版本
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080                #外部访问端口
+          name: web
+          protocol: TCP
+        - containerPort: 50000              #jenkins save发现端口
+          name: agent
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1Gi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        livenessProbe:
+          httpGet:
+            path: /login
+            port: 8080
+          initialDelaySeconds: 60          #容器初始化完成后，等待60秒进行探针检查
+          timeoutSeconds: 5
+          failureThreshold: 12          #当Pod成功启动且检查失败时，Kubernetes将在放弃之前尝试failureThreshold次。放弃生存检查意味着重新启动Pod。而放弃就绪检查，Pod将被标记为未就绪。默认为3.最小值为1
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 8080
+          initialDelaySeconds: 60
+          timeoutSeconds: 5
+          failureThreshold: 12
+        volumeMounts:                       #需要将jenkins_home目录挂载出来
+        - name: jenkinshome
+          subPath: jenkins
+          mountPath: /var/jenkins_home
+        env:
+        - name: LIMITS_MEMORY
+          valueFrom:
+            resourceFieldRef:
+              resource: limits.memory
+              divisor: 1Mi
+        - name: JAVA_OPTS
+          value: -Xmx$(LIMITS_MEMORY)m -XshowSettings:vm -Dhudson.slaves.NodeProvisioner.initialDelay=0 -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85 -Duser.timezone=Asia/Shanghai
+      securityContext:
+        fsGroup: 1000
+      volumes:
+      - name: jenkinshome
+        persistentVolumeClaim:
+          claimName: opspvc             #这里将上面创建的pv关联到pvc
+      imagePullSecrets:
+      - name: harbor-key				#拉取镜像使用的secret
+```
+
+我们镜像使用的是：jenkins/jenkins:lts
+
+6.**创建svc跟ingress**<br>
+现在还缺少一个svc跟ingress，因为我们虽然现在jenkins已经在内部可以访问，但是我们在外面是无法访问的。接下来我们创建一个svc跟ingress
+```
+[root@master jenkins]# cat jenkins_svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    app: jenkins
+spec:
+  selector:
+    app: jenkins
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - name: web
+    port: 8080
+    targetPort: web
+  - name: agent
+    port: 50000
+    targetPort: agent
+
+[root@master jenkins]# cat jenkins_ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+  namespace: jenkins
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - jenkins.intellicredit.cn
+    secretName: jenkins-cert
+  rules:
+  - host: jenkins.intellicredit.cn
+    http:
+      paths:
+      - path:
+        backend:
+          serviceName: jenkins
+          servicePort: 8080
+```
