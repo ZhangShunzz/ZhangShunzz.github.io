@@ -313,3 +313,7 @@ Jenkins Pipeline 有几个核心概念：
 - Step：步骤，Step 是最基本的操作单元，可以是打印一句话，也可以是构建一个 Docker 镜像，由各类 Jenkins 插件提供，比如命令：sh 'make'，就相当于我们平时 shell 终端中执行 make 命令一样
 
 **在 Jenkins 中构建Pipeline任务**
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-pipeline测试01.png)
+在自定义Pipeline script中添加自定义脚本
+
+我们在添加 Slave Pod 的时候，记的添加的 label 吗？没错，我们就需要用到这个 label，我们重新编辑上面创建的 Pipeline 脚本，给 node 添加一个 label 属性，如下：
