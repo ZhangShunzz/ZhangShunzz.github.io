@@ -280,3 +280,24 @@ jenkins——>系统管理——>系统配置(拉到最下面)
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-k8s插件02.png)
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-k8s插件03.png)
 
+##### 四、 测试动态创建jenkins-slave
+
+创建一个测试任务
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-slave测试01.png)
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-slave测试02.png)
+保存后我们直接在页面点击做成的 Build now 触发构建即可，然后观察 Kubernetes 集群中 Pod 的变化
+```
+[root@master jenkins]# kubectl get pods -n jenkins
+NAME                       READY   STATUS    RESTARTS   AGE
+jenkins-7bb864bd7c-cntrf   1/1     Running   0          71m
+jenkins-slave-gl5ww        1/1     Running   0          3s
+```
+可以看到在我们点击立刻构建的时候可以看到一个新的 Pod：jenkins-slave-gl5ww 被创建了，这就是我们的 Jenkins Slave。任务执行完成后我们可以看到任务信息
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-slave测试03.png)
+到这里证明我们的任务已经构建完成，然后这个时候我们再去集群查看我们的 Pod 列表，发现jenkins这个 namespace 下面已经没有之前的 Slave 这个 Pod 了。
+```
+[root@master jenkins]# kubectl get pods -n jenkins
+NAME                       READY   STATUS    RESTARTS   AGE
+jenkins-7bb864bd7c-cntrf   1/1     Running   0          79m
+```
+到这里我们就完成了使用 Kubernetes 动态生成 Jenkins Slave 的方法
