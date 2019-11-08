@@ -27,7 +27,7 @@ tags:
 
 ##### 二、Kubernetes 安装Jenkins
 
-**前提准备：**
-1. 安装harbor镜像仓库
-2. jenkins-master需要volume存储，安装nfs
-3. 使用nginx-ingress暴露jenkins的Web UI
+**前提准备：**<br>
+1.安装harbor镜像仓库<br>
+2.jenkins-master需要volume存储，安装nfs<br>
+3.使用nginx-ingress暴露jenkins的Web UI
