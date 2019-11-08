@@ -306,7 +306,6 @@ jenkins-7bb864bd7c-cntrf   1/1     Running   0          79m
 
 **Jenkins Pipeline 介绍**
 
-
 要实现在 Jenkins 中的构建工作，可以有多种方式，我们这里采用比较常用的 Pipeline 这种方式。Pipeline，简单来说，就是一套运行在 Jenkins 上的工作流框架，将原来独立运行于单个或者多个节点的任务连接起来，实现单个任务难以完成的复杂流程编排和可视化的工作。<br>
 Jenkins Pipeline 有几个核心概念：
 - Node：节点，一个 Node 就是一个 Jenkins 节点，Master 或者 Agent，是执行 Step 的具体运行环境，比如我们之前动态运行的 Jenkins Slave 就是一个 Node 节点
