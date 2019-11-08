@@ -328,7 +328,7 @@ node('jenkins_slave') {
     }
     stage('Build Image') {
       echo "2.Build Stage"
-      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker login --username=xxxxx --password=xxxxx 192.168.0.109"
       sh "docker build -t 192.168.0.109/zzc_raptor/raptor:${build_tag} ."
     }
     stage('Push Image') {
@@ -363,3 +363,7 @@ node('jenkins_slave') {
 }
 ```
 **流程分析：**<br>
+1.**Clone**:在url中添加用户名跟密码可以减去输入密码交互环节。如果我们使用镜像 tag，则每次都是 latest 的 tag，这对于以后的排查或者回滚之类的工作会带来很大麻烦，我们这里采用和git commit的记录为镜像的 tag，这里有一个好处就是镜像的 tag 可以和 git 提交记录对应起来，也方便日后对应查看。但是由于这个 tag 不只是我们这一个 stage 需要使用，下一个推送镜像是不是也需要，所以这里我们把这个 tag 编写成一个公共的参数，把它放在 Clone 这个 stage 中
+2.**Build Image**:根据Dockerfile构建镜像
+3.**Push Image**：将新构建的镜像push到harbor
+4.**Deploy Yaml**：
