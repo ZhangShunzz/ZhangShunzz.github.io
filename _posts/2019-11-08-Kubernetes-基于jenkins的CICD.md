@@ -32,11 +32,11 @@ tags:
 2.[jenkins-master需要volume存储，安装nfs](https://blog.zs-fighting.cn/2019/10/18/Kubernetes-nfs%E5%AE%89%E8%A3%85/)<br>
 3.[使用nginx-ingress暴露jenkins的Web UI](https://blog.zs-fighting.cn/2019/11/01/Kubernetes-ingress%E5%8F%8Aingress_controller/)<br>
 **安装Jenkins：**<br>
-1.**创建一个命名空间**
+1.创建一个命名空
 ```
 kubectl create namespace jenkins
 ```
-2.**创建镜像拉取时的secret、https访问时的secret**
+2.准备镜像拉取时的secret、https访问时的secret
 ```
 [root@master jenkins]# cat jenkins_harbor_secret.yaml
 apiVersion: v1
@@ -53,7 +53,7 @@ type:
 ```
 `~/.docker/config.json`为docker login的认证文件，base64加密后生成密钥<br>
 `certs/intellicre.crt`、`certs/intellicredit.cn.key`分别是ssl认证时的证书跟密钥<br>
-3.**创建pv/pvc持久化存储数据**<br>
+3.准备pv/pvc持久化存储数据<br>
 我们将容器的 /var/jenkins_home 目录挂载到了一个名为 opspvc 的 PVC 对象上面，所以我们同样还得提前创建一个对应的 PVC 对象，我们可以使用 StorageClass 对象来自动创建。
 ```
 cat >/opt/jenkins/jenkins_pv.yaml <<EOF
@@ -84,7 +84,8 @@ spec:
       storage: 20Gi
 EOF
 ```
-4.**创建ServiceAccount，赋予权限**<br>
+需要修改/data/kubernetes/jenkins的权限，`chmod 777 -R /data/kubernetes/jenkins`
+4.准备ServiceAccount，赋予权限<br>
 这里还需要使用到一个拥有相关权限的 serviceAccount：jenkins，我们这里只是给 jenkins 赋予了一些必要的权限
 ```
 cat jenkins_rbac.yaml
@@ -132,7 +133,7 @@ subjects:
     name: jenkins
     namespace: jenkins
 ```
-5.**安装jenkins-master Deployment**
+5.准备jenkins-master Deployment
 ```
 cat jenkins_deployment.yaml
 apiVersion: extensions/v1beta1
@@ -204,7 +205,7 @@ spec:
 
 我们镜像使用的是：jenkins/jenkins:lts
 
-6.**创建svc跟ingress**<br>
+6.准备svc跟ingress<br>
 现在还缺少一个svc跟ingress，因为我们虽然现在jenkins已经在内部可以访问，但是我们在外面是无法访问的。接下来我们创建一个svc跟ingress
 ```
 [root@master jenkins]# cat jenkins_svc.yaml
@@ -250,3 +251,19 @@ spec:
           serviceName: jenkins
           servicePort: 8080
 ```
+7.创建
+```
+kubectl apply -f jenkins_pv.yaml
+kubectl apply -f jenkins_harbor_secret.yaml
+kubectl apply -f jenkins_rbac.yaml
+kubectl apply -f jenkins_svc.yaml
+kubectl apply -f jenkins_ingress.yaml
+kubectl apply -f jenkins_deployment.yaml
+```
+##### Web UI安装jenkins 插件
+将系统默认推荐的插件安装即可<br>
+**安装jenkins遇到的问题**<br>
+1.安装成功后，访问https://jenkins.intellicredit.cn:30443  浏览器界面一直显示：<br>
+Please wait while Jenkins is getting ready to work …<br>
+Your browser will reload automatically when Jenkins is ready.<br>
+**解法方法：**进入jenkins的工作目录，打开hudson.model.UpdateCenter.xml，将 http://updates.jenkins-ci.org/update-center.json 修改成 http://mirror.xmission.com/jenkins/updates/update-center.json
