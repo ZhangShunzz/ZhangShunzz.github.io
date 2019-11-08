@@ -263,11 +263,11 @@ kubectl apply -f jenkins_deployment.yaml
 ##### 三、 Web UI安装jenkins 插件
 将系统默认推荐的插件安装即可，这里安装步骤忽略...<br>
 **安装jenkins遇到的问题**<br>
-1.安装成功后，访问https://jenkins.intellicredit.cn:30443  浏览器界面一直显示：<br>
-Please wait while Jenkins is getting ready to work …<br>
-Your browser will reload automatically when Jenkins is ready.<br>
-**解法方法：**进入jenkins的工作目录，打开hudson.model.UpdateCenter.xml，将 http://updates.jenkins-ci.org/update-center.json 修改成 http://mirror.xmission.com/jenkins/updates/update-center.json
-2.访问https://jenkins.intellicredit.cn:30443  浏览器界面一直显示：<br>
-“该jenkins实例似乎已离线” 
+1.**安装成功后，访问https://jenkins.intellicredit.cn:30443  浏览器界面一直显示：**<br>
+**Please wait while Jenkins is getting ready to work …**<br>
+**Your browser will reload automatically when Jenkins is ready.**<br>
+**解法方法：**进入jenkins的工作目录，打开hudson.model.UpdateCenter.xml，将 http://updates.jenkins-ci.org/update-center.json 修改成 http://mirror.xmission.com/jenkins/updates/update-center.json<br>
+2.**访问https://jenkins.intellicredit.cn:30443  浏览器界面一直显示：**<br>
+**“该jenkins实例似乎已离线”**<br>
 **解法方法**：进入jenkins的工作目录，修改${JENKINS_HOME}/updates/default.json，将www.google.com修改为www.baidu.com
 
