@@ -333,7 +333,7 @@ node('jenkins_slave') {
     }
     stage('Push Image') {
       echo "3.Push Stage"
-      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker login --username=xxxxx --password=xxxxx 192.168.0.109"
       sh "docker push 192.168.0.109/zzc_raptor/raptor:${build_tag}"
     }
     stage('Deploy Yaml') {
@@ -362,4 +362,4 @@ node('jenkins_slave') {
     }
 }
 ```
-将Dockerfile跟
+**流程分析：**<br>
