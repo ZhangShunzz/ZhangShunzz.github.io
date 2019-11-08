@@ -87,6 +87,7 @@ EOF
 4.**创建ServiceAccount，赋予权限**<br>
 这里还需要使用到一个拥有相关权限的 serviceAccount：jenkins，我们这里只是给 jenkins 赋予了一些必要的权限
 ```
+cat jenkins_rbac.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -133,7 +134,7 @@ subjects:
 ```
 5.**安装jenkins-master Deployment**
 ```
-vim /opt/jenkins/jenkins_deployment.yaml
+cat jenkins_deployment.yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
@@ -146,7 +147,7 @@ spec:
         app: jenkins
     spec:
       terminationGracePeriodSeconds: 10     #优雅停止pod
-      serviceAccount: jenkins               #后面还需要创建服务账户
+      serviceAccount: jenkins               #前面创建的服务账户
       containers:
       - name: jenkins
         image: 192.168.0.109/jenkins/jenkins:0.0.1               #镜像版本
@@ -155,7 +156,7 @@ spec:
         - containerPort: 8080                #外部访问端口
           name: web
           protocol: TCP
-        - containerPort: 50000              #jenkins save发现端口
+        - containerPort: 50000              #jenkins slave发现端口
           name: agent
           protocol: TCP
         resources:
