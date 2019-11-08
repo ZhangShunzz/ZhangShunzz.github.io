@@ -261,7 +261,7 @@ kubectl apply -f jenkins_ingress.yaml
 kubectl apply -f jenkins_deployment.yaml
 ```
 ##### 三、 Web UI安装jenkins 插件
-将系统默认推荐的插件安装即可，这里安装步骤忽略...<br>
+将jenkins系统默认推荐的插件安装即可，这里安装步骤忽略...<br>
 **安装jenkins遇到的问题:**<br>
 1. **安装成功后，访问https://jenkins.intellicredit.cn:30443  浏览器界面一直显示：**<br>
 **Please wait while Jenkins is getting ready to work …**<br>
