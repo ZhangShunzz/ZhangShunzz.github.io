@@ -317,3 +317,49 @@ Jenkins Pipeline 有几个核心概念：
 在自定义Pipeline script中添加自定义脚本
 
 我们在添加 Slave Pod 的时候，记的添加的 label 吗？没错，我们就需要用到这个 label，我们重新编辑上面创建的 Pipeline 脚本，给 node 添加一个 label 属性，如下：
+```
+node('jenkins_slave') {
+    stage('Clone') {
+      echo "1.Clone Stage"
+      git url: "https://GitlabUser:GitlabPassword@gitlab.intellicredit.cn/zhangshun/kubernetes-jenkins-test.git"
+      script {
+        build_tag = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+      }      
+    }
+    stage('Build Image') {
+      echo "2.Build Stage"
+      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker build -t 192.168.0.109/zzc_raptor/raptor:${build_tag} ."
+    }
+    stage('Push Image') {
+      echo "3.Push Stage"
+      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker push 192.168.0.109/zzc_raptor/raptor:${build_tag}"
+    }
+    stage('Deploy Yaml') {
+      echo "4. Yaml Stage"
+      def userInput = input(
+        id: 'userInput',
+        message: 'Choose a deploy environment',
+        parameters: [
+            [
+                $class: 'ChoiceParameterDefinition',
+                choices: "QA\nINT\nProd",
+                name: 'Env'
+            ]
+        ]
+      )
+      echo "This is a deploy step to ${userInput}"
+      sh "sed -i 's/<BUILD_TAG>/${build_tag}/g' Raptor_Deployment.yaml"
+      if (userInput == "QA") {
+        sh "sed -i 's/<env>/qa/g' Raptor_Deployment.yaml"
+      } else if (userInput == "INT"){
+        sh "sed -i 's/<env>/int/g' Raptor_Deployment.yaml"
+      } else {
+        sh "sed -i 's/<env>/prod/g' Raptor_Deployment.yaml"
+      }
+      sh "kubectl apply -f Raptor_Deployment.yaml"
+    }
+}
+```
+将Dockerfile跟
