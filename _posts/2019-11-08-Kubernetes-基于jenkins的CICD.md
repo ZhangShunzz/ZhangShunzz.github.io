@@ -31,3 +31,9 @@ tags:
 1.[安装harbor镜像仓库](https://blog.zs-fighting.cn/2019/10/22/Kubernetes-%E4%BB%8E%E7%A7%81%E6%9C%89%E4%BB%93%E5%BA%93%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F/)<br>
 2.[jenkins-master需要volume存储，安装nfs](https://blog.zs-fighting.cn/2019/10/18/Kubernetes-nfs%E5%AE%89%E8%A3%85/)<br>
 3.[使用nginx-ingress暴露jenkins的Web UI](https://blog.zs-fighting.cn/2019/11/01/Kubernetes-ingress%E5%8F%8Aingress_controller/)
+
+**安装Jenkins：**<br>
+1.**创建一个命名空间**
+```
+kubectl create namespace jenkins
+```
