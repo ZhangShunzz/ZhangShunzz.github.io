@@ -301,3 +301,16 @@ NAME                       READY   STATUS    RESTARTS   AGE
 jenkins-7bb864bd7c-cntrf   1/1     Running   0          79m
 ```
 到这里我们就完成了使用 Kubernetes 动态生成 Jenkins Slave 的方法
+
+##### 五、 Jenkins Pipeline 部署kubernetes应用
+
+**Jenkins Pipeline 介绍**
+
+
+要实现在 Jenkins 中的构建工作，可以有多种方式，我们这里采用比较常用的 Pipeline 这种方式。Pipeline，简单来说，就是一套运行在 Jenkins 上的工作流框架，将原来独立运行于单个或者多个节点的任务连接起来，实现单个任务难以完成的复杂流程编排和可视化的工作。<br>
+Jenkins Pipeline 有几个核心概念：
+- Node：节点，一个 Node 就是一个 Jenkins 节点，Master 或者 Agent，是执行 Step 的具体运行环境，比如我们之前动态运行的 Jenkins Slave 就是一个 Node 节点
+- Stage：阶段，一个 Pipeline 可以划分为若干个 Stage，每个 Stage 代表一组操作，比如：Build、Test、Deploy，Stage 是一个逻辑分组的概念，可以跨多个 Node
+- Step：步骤，Step 是最基本的操作单元，可以是打印一句话，也可以是构建一个 Docker 镜像，由各类 Jenkins 插件提供，比如命令：sh 'make'，就相当于我们平时 shell 终端中执行 make 命令一样
+
+**在 Jenkins 中构建Pipeline任务**
