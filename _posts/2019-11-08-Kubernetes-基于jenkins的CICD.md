@@ -24,3 +24,10 @@ tags:
 - **服务高可用**，当Jenkins Master出现故障时，Kubernetes会自动创建一个新的Jenkins Master容器，并且将Volume分配给新创建的容器，保证数据不丢失，从而达到集群服务高可用的作用
 - **动态伸缩**，合理使用资源，每次运行Job时，会自动创建一个Jenkins Slave，Job完成后，Slave自动注销并删除容器，资源自动释放，并且Kubernetes会根据每个资源的使用情况，动态分配slave到空闲的节点上创建，降低出现因某节点资源利用率高，降低出现因某节点利用率高出现排队的情况
 - **扩展性好**，当Kubernetes集群的资源严重不足导致Job排队等待时，可以很容器的添加一个Kubernetes Node到集群，从而实现扩展
+
+##### 二、Kubernetes 安装Jenkins
+
+**前提准备：**
+1. 安装harbor镜像仓库
+2. jenkins-master需要volume存储，安装nfs
+3. 使用nginx-ingress暴露jenkins的Web UI
