@@ -271,3 +271,12 @@ kubectl apply -f jenkins_deployment.yaml
 **“该jenkins实例似乎已离线”**<br>
 **解法方法**：进入jenkins的工作目录，修改${JENKINS_HOME}/updates/default.json，将www.google.com修改为www.baidu.com
 
+**安装kubernetes插件**<br>
+jenkins——>系统管理——>插件管理——>安装kubernetes插件
+
+**配置kubernetes插件**<br>
+jenkins——>系统管理——>系统配置(拉到最下面)
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-k8s插件01.png)
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-k8s插件02.png)
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-k8s插件03.png)
+
