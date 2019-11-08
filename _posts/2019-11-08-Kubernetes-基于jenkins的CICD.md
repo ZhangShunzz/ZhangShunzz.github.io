@@ -285,7 +285,7 @@ jenkins——>系统管理——>系统配置(拉到最下面)
 创建一个测试任务
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-slave测试01.png)
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/jenkins-slave测试02.png)
-保存后我们直接在页面点击做成的 Build now 触发构建即可，然后观察 Kubernetes 集群中 Pod 的变化
+保存后我们直接在页面点击Build now 触发构建即可，然后观察 Kubernetes 集群中 Pod 的变化
 ```
 [root@master jenkins]# kubectl get pods -n jenkins
 NAME                       READY   STATUS    RESTARTS   AGE
