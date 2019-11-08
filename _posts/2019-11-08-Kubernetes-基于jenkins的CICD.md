@@ -371,4 +371,5 @@ node('jenkins_slave') {
 
 3.**Push Image**：将新构建的镜像push到harbor
 
-4.**Deploy Yaml**：
+4.**Deploy Yaml**：首先修改yaml文件中的镜像tag。然后可能还需要一些人工干预的步骤，这是为什么呢？比如我们提交了一次代码，测试也通过了，镜像也打包上传了，但是这个版本并不一定就是要立刻上线到生产环境的，对吧，我们可能需要将该版本先发布到测试环境、QA 环境、或者预览环境之类的，总之直接就发布到线上环境去还是挺少见的，所以我们需要增加人工确认的环节，一般都是在 CD 的环节才需要人工干预。在**Deploy Yaml**阶段中，会让用户选择部署的环境QA/INT/Prod,**根据用户选择的环境替换yaml文件中的<env>**，最后apply更新。
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/确认env.png)
