@@ -36,3 +36,20 @@ tags:
 ```
 kubectl create namespace jenkins
 ```
+2.**创建镜像拉取时的secret、https访问时的secret**
+```
+[root@master jenkins]# cat jenkins_harbor_secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: harbor-key
+  namespace: jenkins
+data:
+  .dockerconfigjson: {base64 -w 0 ~/.docker/config.json}
+type:
+  kubernetes.io/dockerconfigjson
+
+[root@master jenkins]# kubectl create secret tls jenkins-cert --cert=certs/intellicre.crt --key=certs/intellicredit.cn.key -n jenkins
+```
+`~/.docker/config.json`为docker login的认证文件，将文件base64加密后生成密钥<br>
+`certs/intellicre.crt``certs/intellicredit.cn.key`分别是ssl认证时的证书跟密钥
