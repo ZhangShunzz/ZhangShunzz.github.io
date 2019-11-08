@@ -52,4 +52,4 @@ type:
 [root@master jenkins]# kubectl create secret tls jenkins-cert --cert=certs/intellicre.crt --key=certs/intellicredit.cn.key -n jenkins
 ```
 `~/.docker/config.json`为docker login的认证文件，将文件base64加密后生成密钥<br>
-`certs/intellicre.crt``certs/intellicredit.cn.key`分别是ssl认证时的证书跟密钥
+`certs/intellicre.crt`、`certs/intellicredit.cn.key`分别是ssl认证时的证书跟密钥
