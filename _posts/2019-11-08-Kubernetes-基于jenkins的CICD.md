@@ -431,3 +431,10 @@ WORKDIR /usr/local/tomcat/bin
 ```
 
 **测试流程：修改APP目录下的index.html ——> git push ——> jenkins-master pipeline build ——> Clone、Build Image、Push Image、Deploy Yaml ——> 测试页面是否修改**
+
+```bash
+echo `date +%Y-%m-%d-%H:%M:%S` > APP/index.html
+git add . && git commit -m "EDIT index.html" && git push origin master
+```
+**jenkins-master build**
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/测试index.png)
