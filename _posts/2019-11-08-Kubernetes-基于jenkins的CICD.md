@@ -375,7 +375,7 @@ node('jenkins_slave') {
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/确认env.png)
 
 **测试样例的Yaml：**
-```
+```yaml
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
