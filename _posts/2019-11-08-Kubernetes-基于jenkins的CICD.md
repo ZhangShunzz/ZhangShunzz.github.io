@@ -54,7 +54,7 @@ type:
 `~/.docker/config.json`为docker login的认证文件，base64加密后生成密钥<br>
 `certs/intellicre.crt`、`certs/intellicredit.cn.key`分别是ssl认证时的证书跟密钥<br>
 3.准备pv/pvc持久化存储数据<br>
-我们将容器的 /var/jenkins_home 目录挂载到了一个名为 opspvc 的 PVC 对象上面，所以我们同样还得提前创建一个对应的 PVC 对象，我们可以使用 StorageClass 对象来自动创建。
+我们将容器的 /var/jenkins_home 目录挂载到了一个名为 opspvc 的 PVC 对象上面，所以我们同样还得提前创建一个对应的 PVC 对象，当然我们也可以使用 StorageClass 对象来自动创建。
 ```
 cat >/opt/jenkins/jenkins_pv.yaml <<EOF
 apiVersion: v1
