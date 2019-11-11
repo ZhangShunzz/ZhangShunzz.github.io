@@ -358,7 +358,7 @@ node('jenkins_slave') {
       } else {
         sh "sed -i 's/<env>/prod/g' Raptor_Deployment.yaml"
       }
-      sh "kubectl apply -f Raptor_Deployment.yaml"
+      sh "kubectl apply -f Raptor_Deployment.yaml --record"
     }
 }
 ```
