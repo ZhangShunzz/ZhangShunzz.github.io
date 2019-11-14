@@ -74,3 +74,6 @@ node('jenkins_slave') {		\\表明要执行的node
 
 ##### 二、步骤优化
 
+1、git认证<br>
+**优化前：**使用的是`https://GitlabUser:GitlabPassword@gitlab.intellicredit.cn/zhangshun/kubernetes-jenkins-test.git`拉取代码，将用户名跟密码放到url中了，非常不安全<br>
+**优化后：**在jenkins中创建凭证，采用ssh登陆方式拉取代码
