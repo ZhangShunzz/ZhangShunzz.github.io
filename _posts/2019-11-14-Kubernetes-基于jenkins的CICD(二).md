@@ -23,4 +23,49 @@ tags:
 **构建前需要输入的参数：**
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/效果图.png)
 
-pipeline声明式参考
+**pipeline声明式参考:**
+```
+node('jenkins_slave') {
+
+  if (env.Action == "Deploy") {
+    stage('Clone') {
+      echo "1.Clone Stage"
+      git credentialsId: 'gitlab-ssh-secret', url: 'git@gitlab.intellicredit.cn:zhangshun/kubernetes-jenkins-test.git'
+      script {
+        build_tag = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+        date = sh(script: "date +%Y-%m-%d-%H:%M:%S", returnStdout: true).trim()
+      }      
+    }
+    stage('Build Image') {
+      echo "2.Build Stage"
+      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker build -t 192.168.0.109/zzc_raptor/raptor:${build_tag} ."
+    }
+    stage('Push Image') {
+      echo "3.Push Stage"
+      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker push 192.168.0.109/zzc_raptor/raptor:${build_tag}"
+    }
+    stage('Deploy Yaml') {
+      echo "4. Yaml Stage"
+      echo "This is a deploy step to \${Env}"
+      sh "sed -i 's/<BUILD_TAG>/${build_tag}/g' Raptor_Deployment.yaml"
+      if (env.Env == "qa") {
+        sh "sed -i 's/<env>/qa/g' Raptor_Deployment.yaml"
+      } else if (env.Env == "int"){
+        sh "sed -i 's/<env>/int/g' Raptor_Deployment.yaml"
+      } else {
+        sh "sed -i 's/<env>/prod/g' Raptor_Deployment.yaml"
+      }
+      sh "cp Raptor_Deployment.yaml Raptor_Deployment_\${Env}_${build_tag}_${date}.yaml"
+      sh "kubectl apply -f Raptor_Deployment_\${Env}_${build_tag}_${date}.yaml --record"
+    }
+  }
+
+  if (env.Action == "RollBackup") {
+    stage('RollBackup') {
+        sh "kubectl rollout undo deployment raptor -n \${Env} --to-revision `kubectl rollout history deployment raptor -n \${Env}|grep \${RollBackupName}|awk '{print \$1}'`"
+    }
+  }
+}
+```
