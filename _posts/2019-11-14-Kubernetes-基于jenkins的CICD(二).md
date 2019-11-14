@@ -49,20 +49,20 @@ node('jenkins_slave') {		\\表明要执行的node
     stage('Deploy Yaml') {
       echo "4. Yaml Stage"
       echo "This is a deploy step to \${Env}"
-      sh "sed -i 's/<BUILD_TAG>/${build_tag}/g' Raptor_Deployment.yaml"
-      if (env.Env == "qa") {
+      sh "sed -i 's/<BUILD_TAG>/${build_tag}/g' Raptor_Deployment.yaml"		\\替换镜像的tag
+      if (env.Env == "qa") {	\\选择部署的环境
         sh "sed -i 's/<env>/qa/g' Raptor_Deployment.yaml"
       } else if (env.Env == "int"){
         sh "sed -i 's/<env>/int/g' Raptor_Deployment.yaml"
       } else {
         sh "sed -i 's/<env>/prod/g' Raptor_Deployment.yaml"
       }
-      sh "cp Raptor_Deployment.yaml Raptor_Deployment_\${Env}_${build_tag}_${date}.yaml"
+      sh "cp Raptor_Deployment.yaml Raptor_Deployment_\${Env}_${build_tag}_${date}.yaml"	\\重命名yaml文件，方便以后回滚
       sh "kubectl apply -f Raptor_Deployment_\${Env}_${build_tag}_${date}.yaml --record"
     }
   }
 
-  if (env.Action == "RollBackup") {
+  if (env.Action == "RollBackup") {		\\Action选择Rollbackup时执行下面
     stage('RollBackup') {
         sh "kubectl rollout undo deployment raptor -n \${Env} --to-revision `kubectl rollout history deployment raptor -n \${Env}|grep \${RollBackupName}|awk '{print \$1}'`"
     }
