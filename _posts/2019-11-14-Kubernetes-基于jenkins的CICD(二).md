@@ -23,6 +23,8 @@ tags:
 **构建前需要输入的参数：**
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/效果图.png)
 
+**可以根据git commitID跟时间戳来选择回滚的版本**
+
 **pipeline声明式参考:**
 ```
 node('jenkins_slave') {		\\表明要执行的node
