@@ -6,6 +6,7 @@ header-img: "img/background/24.jpg"
 header-mask: 0.2
 tags:
   - Kubernetes
+  - Jenkins
 ---
 
 ##### 一、 增加回滚功能
@@ -21,3 +22,5 @@ tags:
 
 **构建前需要输入的参数：**
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/效果图.png)
+
+pipeline声明式参考

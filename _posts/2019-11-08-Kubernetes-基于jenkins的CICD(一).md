@@ -6,6 +6,8 @@ header-img: "img/background/25.jpg"
 header-mask: 0.2
 tags:
   - Kubernetes
+  - Jenkins
+  - Git
 ---
 
 ##### 一、在Kubernetes 安装 Jenkins优点
