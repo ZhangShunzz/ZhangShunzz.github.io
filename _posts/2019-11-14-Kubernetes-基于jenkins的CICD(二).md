@@ -76,4 +76,9 @@ node('jenkins_slave') {		\\表明要执行的node
 
 1、git认证<br>
 **优化前：**使用的是`https://GitlabUser:GitlabPassword@gitlab.intellicredit.cn/zhangshun/kubernetes-jenkins-test.git`拉取代码，将用户名跟密码放到url中了，非常不安全<br>
-**优化后：**在jenkins中创建凭证，采用ssh登陆方式拉取代码
+**优化后：**在jenkins中创建凭证，采用ssh登陆方式拉取代码<br>
+创建凭证：
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/凭证.png)
+构建流水线语法：让你可以轻松写出Groovy，而不需要会Groovy
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/构建流水线语法01.png)
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/构建流水线语法02.png)
