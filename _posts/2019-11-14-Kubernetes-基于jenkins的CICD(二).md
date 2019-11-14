@@ -18,3 +18,6 @@ tags:
 
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/参数化构建01.png)
 ![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/参数化构建02.png)
+
+**展示：**
+![](/img/in-post/2019-11-08-Kubernetes-基于jenkins的CICD/效果图.png)
