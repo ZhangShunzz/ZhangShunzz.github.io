@@ -30,7 +30,7 @@ node('jenkins_slave') {		\\表明要执行的node
   if (env.Action == "Deploy") {		\\Action选择Deploy时执行下面
     stage('Clone') {
       echo "1.Clone Stage"
-      git credentialsId: 'gitlab-ssh-secret', url: 'git@gitlab.intellicredit.cn:zhangshun/kubernetes-jenkins-test.git'
+      git credentialsId: 'gitlab-ssh-secret', url: 'git@gitlab.xxxxxx.cn:zhangshun/xxxxxx.git'
       script {
         build_tag = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()		\\全局变量，把git commitID 作为镜像的tag，方便查看跟回滚
         date = sh(script: "date +%Y-%m-%d-%H:%M:%S", returnStdout: true).trim()		\\全局变量，方便查看跟回滚
@@ -38,12 +38,12 @@ node('jenkins_slave') {		\\表明要执行的node
     }
     stage('Build Image') {
       echo "2.Build Stage"
-      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker login --username=admin --password=xxxxxx 192.168.0.109"
       sh "docker build -t 192.168.0.109/zzc_raptor/raptor:${build_tag} ."
     }
     stage('Push Image') {
       echo "3.Push Stage"
-      sh "docker login --username=admin --password=123456 192.168.0.109"
+      sh "docker login --username=admin --password=xxxxxx 192.168.0.109"
       sh "docker push 192.168.0.109/zzc_raptor/raptor:${build_tag}"
     }
     stage('Deploy Yaml') {
