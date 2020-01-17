@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Linux：网卡状态以及ethtool工具"
+title: "Linux：网络丢包以及ethtool工具使用"
 author: "zhangshun"
 header-img: "img/background/20.jpg"
 header-mask: 0.2
@@ -37,4 +37,12 @@ lo        Link encap:Local Loopback
           RX bytes:2798284 (2.7 MB)  TX bytes:2798284 (2.7 MB)
 ```
 
-- aaa
+- HWaddr：网卡的物理地址
+- Bcast：广播地址
+- UP：代表网卡开启状态
+- RUNNING：代表网卡的网线被接上
+- MULTICAST：支持组播
+- MTU:1500：最大传输单元，1500字节
+- RX
+  - aa
+  - aa
