@@ -11,6 +11,7 @@ tags:
 ### ifconfig命令
 
 ```
+root@test-01:~# ifconfig
 eth0      Link encap:Ethernet  HWaddr 00:16:3e:05:34:06  
           inet addr:10.10.10.10  Bcast:10.10.10.10  Mask:255.255.252.0
           UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
@@ -26,6 +27,14 @@ eth1      Link encap:Ethernet  HWaddr 00:16:3e:05:a0:b4
           TX packets:80474358 errors:0 dropped:0 overruns:0 carrier:0
           collisions:0 txqueuelen:1000 
           RX bytes:12142422828 (12.1 GB)  TX bytes:13172798780 (13.1 GB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+          RX packets:9847 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:9847 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:2798284 (2.7 MB)  TX bytes:2798284 (2.7 MB)
 ```
 
 - aaa
