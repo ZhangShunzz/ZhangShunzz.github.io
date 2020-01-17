@@ -112,7 +112,7 @@ TX:		511
 
 **三、ethtool -S eno1:收到的数据包统计**
 
-RX就是收到数据，TX是发出数据。还会展示NIC每个队列收发消息情况。**其中比较关键的是带有drop字样的统计和fifo_errors的统计，可以使用ethtool -S eno1|egrep 'error|drop'进行统计**
+RX就是收到数据，TX是发出数据。还会展示NIC每个队列收发消息情况。**其中比较关键的是带有drop字样的统计和fifo_errors的统计，可以使用ethtool -S eno1\|egrep 'error\|drop'进行统计**
 
 `cat /proc/net/dev`也可以统计数据包的信息，不过这个统计比较难看
 
