@@ -55,3 +55,65 @@ lo        Link encap:Local Loopback
 
 ethtool命令用于获取以太网卡的配置信息，或者修改这些配置。这个命令比较复杂，功能特别多。
 
+**一、ethtool eno1：查看网卡基础信息**
+
+```
+Settings for eno1:
+	Supported ports: [ TP ]
+	Supported link modes:   10baseT/Half 10baseT/Full 
+	                        100baseT/Half 100baseT/Full 
+	                        1000baseT/Half 1000baseT/Full 
+	Supported pause frame use: No
+	Supports auto-negotiation: Yes
+	Advertised link modes:  10baseT/Half 10baseT/Full 
+	                        100baseT/Half 100baseT/Full 
+	                        1000baseT/Half 1000baseT/Full 
+	Advertised pause frame use: Symmetric
+	Advertised auto-negotiation: Yes		###自动协商开启
+	Link partner advertised link modes:  10baseT/Half 10baseT/Full 
+	                                     100baseT/Half 100baseT/Full 
+	                                     1000baseT/Full 
+	Link partner advertised pause frame use: Symmetric Receive-only
+	Link partner advertised auto-negotiation: Yes
+	Speed: 1000Mb/s			###网卡速度
+	Duplex: Full			###网卡工作模式
+	Port: Twisted Pair
+	PHYAD: 1
+	Transceiver: internal
+	Auto-negotiation: on
+	MDI-X: off
+	Supports Wake-on: g
+	Wake-on: d
+	Current message level: 0x000000ff (255)
+			       drv probe link timer ifdown ifup rx_err tx_err
+	Link detected: yes		###该网卡已激活
+```
+
+**二、ethtool -g eno1:查看Ring Buffer队列大小**
+
+```
+Ring parameters for eno1:
+Pre-set maximums:
+RX:		2047
+RX Mini:	0
+RX Jumbo:	0
+TX:		511
+Current hardware settings:
+RX:		200
+RX Mini:	0
+RX Jumbo:	0
+TX:		511
+```
+看到RX和TX最大是2047和511，当前值为200和511。**队列越大丢包的可能越小，但数据延迟会增加**
+
+**ethtool -G eno1 rx 1024:调整 Ring Buffer 队列的权重**
+
+
+
+**三、ethtool -S eno1:收到的数据包统计**
+
+RX就是收到数据，TX是发出数据。还会展示NIC每个队列收发消息情况。**其中比较关键的是带有drop字样的统计和fifo_errors的统计，可以使用ethtool -S eno1|egrep 'error|drop'进行统计**
+
+`cat /proc/net/dev`也可以统计数据包的信息，不过这个统计比较难看
+
+**四、ethtool -i eno1:查看网卡驱动**
