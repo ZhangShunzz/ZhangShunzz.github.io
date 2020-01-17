@@ -43,6 +43,15 @@ lo        Link encap:Local Loopback
 - RUNNING：代表网卡的网线被接上
 - MULTICAST：支持组播
 - MTU:1500：最大传输单元，1500字节
-- RX
-  - aa
-  - aa
+- RX/TX
+  - packets：发送的数据包
+  - **errors**：错误数据包个数，包括too-long-frames错误，Ring Buffer溢出错误，crc校验错误，帧同步错误，fifo overruns以及missed pkg等等
+  - **dropped**：表示数据包已经进入了Ring Buffer，但是由于内存不够等系统原因，导致在拷贝到内存的过程中被丢弃。
+  - **overruns**：overruns的增大意味着数据包没到Ring Buffer就被网卡物理层给丢弃了，而CPU无法及时的处理中断是造成Ring Buffer满的原因之一
+- collisions：如果你看到大量的冲突(Collisions)，那么这很有可能是网络的传输介质出了问题，例如网线不通或hub损坏。
+
+
+### ethtool工具
+
+ethtool命令用于获取以太网卡的配置信息，或者修改这些配置。这个命令比较复杂，功能特别多。
+
