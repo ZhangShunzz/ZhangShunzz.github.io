@@ -33,7 +33,7 @@ VRRP ,全称 Virtual Router Redundancy Protocol ,中文名为虚拟路由冗余�
 
 ### 4、keepalived软件使用
 
-4.1、第一个里程碑 keepalived软件安装
+**4.1、第一个里程碑 keepalived软件安装**
 
 `yum install keepalived -y`
 
@@ -46,7 +46,7 @@ VRRP ,全称 Virtual Router Redundancy Protocol ,中文名为虚拟路由冗余�
 /usr/libexec/keepalived
 /usr/sbin/keepalived
 ```
-4.2、配置文件说明
+**4.2、配置文件说明**
 
 主节点配置文件
 ```
