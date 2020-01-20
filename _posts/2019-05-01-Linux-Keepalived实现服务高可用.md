@@ -64,7 +64,7 @@ vrrp_instance VI_1 {		###定义实例
     state MASTER		###状态参数 master/backup 只是说明
     nopreempt		###非抢占模式，避免无用的切换
     interface eth0		###虚IP地址放置的网卡位置
-    virtual_router_id 254		###同一家族要一致，同一个集群id一致
+    virtual_router_id 254		###同一实例组要一致，同一个集群id一致
     priority 100		###优先级决定是主还是备    越大越优先
     advert_int 1		###主备通讯时间间隔
     authentication {		###认证
@@ -95,7 +95,7 @@ vrrp_instance VI_1 {		###定义实例
     state BACKUP		###状态参数 master/backup 只是说明
     nopreempt		###非抢占模式，避免无用的切换
     interface eth0		###虚IP地址放置的网卡位置
-    virtual_router_id 254		###同一家族要一致，同一个集群id一致
+    virtual_router_id 254		###同一实例组要一致，同一个集群id一致
     priority 99		###优先级决定是主还是备    越大越优先
     advert_int 1		###主备通讯时间间隔
     authentication {		###认证
