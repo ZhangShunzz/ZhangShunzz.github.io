@@ -137,21 +137,29 @@ EOF
 
 **默认镜像下载需要翻墙，下面是提供我个人的dockerhub地址**
 
+---
+
 |  官方镜像地址	   | 个人 DockerHub 地址  |
 |  ----  | ----  |
-| quay.io/coreos/configmap-reload:v0.0.1	  | yangpeng2468/configmap-reload:v0.0.1 |
-| quay.io/coreos/k8s-prometheus-adapter-amd64:v0.4.1	  | 单元格 |
-| quay.io/coreos/kube-rbac-proxy:v0.4.1	  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
-| 单元格  | 单元格 |
+| quay.io/coreos/configmap-reload:v0.0.1	  | zhangshunzz/configmap-reload:v0.0.1 |
+| quay.io/coreos/k8s-prometheus-adapter-amd64:v0.4.1	  | zhangshunzz/k8s-prometheus-adapter-amd64:v0.4.1 |
+| quay.io/coreos/kube-rbac-proxy:v0.4.1	  | zhangshunzz/kube-rbac-proxy:v0.4.1 |
+| quay.io/coreos/kube-state-metrics:v1.5.0	  | zhangshunzz/kube-state-metrics:v1.5.0 |
+| quay.io/prometheus/prometheus:v2.5.0	  | zhangshunzz/prometheus:v2.5.0 |
+| quay.io/prometheus/node-exporter:v0.17.0	  | zhangshunzz/node-exporter:v0.17.0 |
+| quay.io/coreos/prometheus-operator:v0.29.0	  | zhangshunzz/prometheus-operator:v0.29.0 |
+| quay.io/coreos/prometheus-config-reloader:v0.29.0	  | zhangshunzz/prometheus-config-reloader:v0.29.0 |
+| quay.io/prometheus/prometheus:v2.7.2	  | zhangshunzz/prometheus:v2.7.2 |
+| quay.io/prometheus/alertmanager:v0.16.1	  | zhangshunzz/alertmanager:v0.16.1 |
+| k8s.gcr.io/addon-resizer:1.8.4	  | zhangshunzz/addon-resizer:1.8.4 |
+
+**首先创建namespace monitoring**
+
+---
+
+`kubectl apply -f 00namespace-namespace.yaml`
+
+**部署operator**
+---
+
+`kubectl apply -f operator/`
