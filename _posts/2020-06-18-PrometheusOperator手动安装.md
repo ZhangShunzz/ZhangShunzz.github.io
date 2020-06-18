@@ -163,3 +163,66 @@ EOF
 
 ---
 `kubectl apply -f operator/`
+
+**查看是否正常部署**
+
+---
+```shell
+$ kubectl -n monitoring get pod
+
+NAME                                   READY     STATUS    RESTARTS   AGE
+prometheus-operator-56954c76b5-qm9ww   1/1       Running   0          24s
+```
+
+**查看是否正常部署自定义资源定义(CRD)**
+
+---
+```shell
+$ kubectl get crd -n monitoring
+
+NAME                                    CREATED AT
+alertmanagers.monitoring.coreos.com     2019-04-16T06:22:20Z
+prometheuses.monitoring.coreos.com      2019-04-16T06:22:20Z
+prometheusrules.monitoring.coreos.com   2019-04-16T06:22:20Z
+servicemonitors.monitoring.coreos.com   2019-04-16T06:22:21Z
+```
+
+### 四、部署整套CRD
+
+```shell
+# 把etcd证书保存到secrets中
+kubectl -n monitoring create secret generic etcd-certs --from-file=/opt/kubernetes/ssl/server.pem --from-file=/opt/kubernetes/ssl/server-key.pem --from-file=/opt/kubernetes/ssl/ca.pem
+ 
+# 加载自定义配置
+cd other
+kubectl create secret generic additional-configs --from-file=prometheus-additional.yaml -n monitoring
+ 
+kubectl apply -f adapter/
+kubectl apply -f alertmanager/
+kubectl apply -f node-exporter/
+kubectl apply -f kube-state-metrics/
+kubectl apply -f grafana/
+kubectl apply -f prometheus/
+kubectl apply -f serviceMonitor/
+ 
+ 
+# 查看是否正常部署
+kubectl -n monitoring get all -o wide
+```
+
+### 五、部署遇到的坑
+
+**坑一**
+
+---
+
+访问prometheus server的web页面发现即使创建了svc和注入对应ep的信息在target页面还是被prometheus server请求被拒绝.
+
+需要修改kube-controller-manager配置文件跟kube-scheduler配置文件。将进程的监听地址改成0.0.0.0
+
+**坑二**
+
+---
+
+
+
