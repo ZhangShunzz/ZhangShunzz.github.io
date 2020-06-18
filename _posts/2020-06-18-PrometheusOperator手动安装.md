@@ -160,6 +160,6 @@ EOF
 `kubectl apply -f 00namespace-namespace.yaml`
 
 **部署operator**
----
 
+---
 `kubectl apply -f operator/`
