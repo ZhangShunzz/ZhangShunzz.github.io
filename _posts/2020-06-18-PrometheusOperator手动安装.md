@@ -208,6 +208,10 @@ kubectl apply -f serviceMonitor/
  
 # 查看是否正常部署
 kubectl -n monitoring get all -o wide
+
+# 修改svc(grafana、prometheus-k8s)类型为NodePort
+kubectl -n monitoring edit svc grafana
+kubectl -n monitoring edit svc prometheus-k8s
 ```
 
 ### 五、部署遇到的坑
@@ -223,6 +227,8 @@ kubectl -n monitoring get all -o wide
 **坑二**
 
 ---
+如果k8s集群是二进制方式安装的
 
+prometheus-operator 需要修改apiserver的配置文件。加入--requestheader-client-ca-file=/etc/kubernetes/ssl/ca.pem
 
 
