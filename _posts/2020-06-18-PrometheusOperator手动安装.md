@@ -220,9 +220,9 @@ kubectl -n monitoring edit svc prometheus-k8s
 
 ---
 
-访问prometheus server的web页面发现即使创建了svc和注入对应ep的信息在target页面还是被prometheus server请求被拒绝.
+`访问prometheus server的web页面发现即使创建了svc和注入对应ep的信息在target页面还是被prometheus server请求被拒绝.`
 
-需要修改kube-controller-manager配置文件跟kube-scheduler配置文件。将进程的监听地址改成0.0.0.0
+`需要修改kube-controller-manager配置文件跟kube-scheduler配置文件。将进程的监听地址改成0.0.0.0`
 
 **坑二**
 
