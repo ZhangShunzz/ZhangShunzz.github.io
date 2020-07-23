@@ -8,7 +8,7 @@ tags:
   - Mysql
 ---
 
-**前言： **
+**前言：**
 
 有时候，连接MySQL的会话经常会异常退出，错误日志里会看到"Got an error reading communication packets"类型的告警。本篇文章我们一起来讨论下该错误可能的原因以及如何来规避。
 
