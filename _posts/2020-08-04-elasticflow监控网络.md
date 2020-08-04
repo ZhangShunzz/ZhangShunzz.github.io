@@ -34,6 +34,7 @@ systemctl enable kibana.service
 systemctl enable logstash.service
 ```
 **安装elasticsearch**
+
 修改文件句柄数
 ```
 ulimit -n 65536
@@ -43,7 +44,11 @@ vim /etc/security/limits.conf
 *　　hard　　nofile　　65536
 ```
 
-`chown elasticsearch:elasticsearch /data/elk_data`
+创建es的数据目录
+```
+mkdir -p /data/elk_data
+chown elasticsearch:elasticsearch /data/elk_data
+```
 
 配置传输层TLS/SSL加密传输
 ```
@@ -85,6 +90,7 @@ search.max_buckets: 100000
 systemctl start elasticsearch
 ```
 **安装kibana**
+
 创建kibana连接es的证书，这里统一创建所有客户端的证书
 
 之前创建一个名为elastic-certificates.p12的文件，其中包含对我们的Elasticsearch集群进行PKI身份验证所需的所有信息。 但是，为了使用此证书，需要将其分解为其私钥，公共证书和CA证书
@@ -151,13 +157,20 @@ cd /tmp/
 git clone https://github.com/robcowart/elastiflow.git
 ```
 
-将elastiflow文件夹复制到相关目录
+将elastiflow文件夹复制到相关目录,并修改elastiflow.conf
 ```
 // 处理数据所需要的配置文件
 cp -a elastiflow-master/logstash/elastiflow /etc/logstash
 
+mkdir -p /etc/systemd/system/logstash.service.d/
 // 运行elastflow时所需要的环境变量
 cp -a elastiflow-master/logstash.service.d/elastiflow.conf /etc/systemd/system/logstash.service.d/
+
+修改 /etc/systemd/system/logstash.service.d/elastiflow.conf中的es集群认证信息
+$ELASTIFLOW_ES_USER
+$ELASTIFLOW_ES_PASSWD
+$ELASTIFLOW_ES_SSL_ENABLE
+$ELASTIFLOW_ES_SSL_VERIFY
 ```
 
 配置logstash pipeline文件
