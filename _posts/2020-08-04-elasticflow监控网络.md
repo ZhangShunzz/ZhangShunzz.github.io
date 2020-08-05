@@ -99,9 +99,9 @@ cd /etc/elasticsearch/certs/
 // Private Key 私钥
 openssl pkcs12 -in /etc/elasticsearch/certs/elastic-certificates.p12 -nocerts -nodes > client.key
 // Public Certificate 公共证书
-openssl pkcs12 -in /etc/elasticsearch/certs/client.p12 -clcerts -nokeys  > client.cer
+openssl pkcs12 -in /etc/elasticsearch/certs/elastic-certificates.p12 -clcerts -nokeys  > client.cer
 // CA Certificate 签署公共证书的CA
-openssl pkcs12 -in /etc/elasticsearch/certs/client.p12 -cacerts -nokeys -chain > client-ca.cer
+openssl pkcs12 -in /etc/elasticsearch/certs/elastic-certificates.p12 -cacerts -nokeys -chain > client-ca.cer
 
 mkdir /etc/kibana/certs
 cp /etc/elasticsearch/certs/client.key /etc/kibana/certs
@@ -169,8 +169,6 @@ cp -a elastiflow-master/logstash.service.d/elastiflow.conf /etc/systemd/system/l
 修改 /etc/systemd/system/logstash.service.d/elastiflow.conf中的es集群认证信息
 $ELASTIFLOW_ES_USER
 $ELASTIFLOW_ES_PASSWD
-$ELASTIFLOW_ES_SSL_ENABLE
-$ELASTIFLOW_ES_SSL_VERIFY
 ```
 
 配置logstash pipeline文件
