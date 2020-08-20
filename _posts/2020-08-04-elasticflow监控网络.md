@@ -91,23 +91,6 @@ systemctl start elasticsearch
 ```
 **安装kibana**
 
-创建kibana连接es的证书，这里统一创建所有客户端的证书
-
-之前创建一个名为elastic-certificates.p12的文件，其中包含对我们的Elasticsearch集群进行PKI身份验证所需的所有信息。 但是，为了使用此证书，需要将其分解为其私钥，公共证书和CA证书
-```
-cd /etc/elasticsearch/certs/
-// Private Key 私钥
-openssl pkcs12 -in /etc/elasticsearch/certs/elastic-certificates.p12 -nocerts -nodes > client.key
-// Public Certificate 公共证书
-openssl pkcs12 -in /etc/elasticsearch/certs/elastic-certificates.p12 -clcerts -nokeys  > client.cer
-// CA Certificate 签署公共证书的CA
-openssl pkcs12 -in /etc/elasticsearch/certs/elastic-certificates.p12 -cacerts -nokeys -chain > client-ca.cer
-
-mkdir /etc/kibana/certs
-cp /etc/elasticsearch/certs/client.key /etc/kibana/certs
-cp /etc/elasticsearch/certs/client.cer /etc/kibana/certs
-cp /etc/elasticsearch/certs/client-ca.cer /etc/kibana/certs
-```
 
 修改kibana配置文件
 ```
@@ -119,10 +102,6 @@ i18n.locale: "zh-CN"
 xpack.security.enabled: true
 elasticsearch.username: "kibana_system"
 elasticsearch.password: "ChMu94Wyh6zRAfRlRyJM"
-elasticsearch.ssl.certificate: /etc/kibana/certs/client.cer
-elasticsearch.ssl.key: /etc/kibana/certs/client.key
-elasticsearch.ssl.certificateAuthorities: [ "/etc/kibana/certs/client-ca.cer" ]
-elasticsearch.ssl.verificationMode: certificate
 ```
 
 启动kibana
