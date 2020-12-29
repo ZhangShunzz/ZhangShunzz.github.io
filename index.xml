@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ZhangShun&#39;s blog</title>
+    <link>/</link>
+    <description>Recent content on ZhangShun&#39;s blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-hans</language>
+    <copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
+    <lastBuildDate>Tue, 29 Dec 2020 11:25:52 +0800</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go：goroutine与channel</title>
+      <link>/posts/2020-11-27-go%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%B9%B6%E5%8F%91/</link>
+      <pubDate>Tue, 29 Dec 2020 11:25:52 +0800</pubDate>
+      
+      <guid>/posts/2020-11-27-go%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%B9%B6%E5%8F%91/</guid>
+      <description>并发是编程里面一个非常重要的概念，Go语言在语言层面天生支持并发，这也是Go语言流行的一个很重要的原因。
+Go语言中的并发编程 并发与并行 并发：同一时间段内执行多个任务（你在用微信和两个女朋友聊天）。
+并行：同一时刻执行多个任务（你和你朋友都在用微信和女朋友聊天）。
+Go语言的并发通过goroutine实现。goroutine类似于线程，属于用户态的线程，我们可以根据需要创建成千上万个goroutine并发工作。goroutine是由Go语言的运行时（runtime）调度完成，而线程是由操作系统调度完成。
+Go语言还提供channel在多个goroutine间进行通信。goroutine和channel是 Go 语言秉承的 CSP（Communicating Sequential Process）并发模式的重要实现基础。
+goroutine 在java/c++中我们要实现并发编程的时候，我们通常需要自己维护一个线程池，并且需要自己去包装一个又一个的任务，同时需要自己去调度线程执行任务并维护上下文切换，这一切通常会耗费程序员大量的心智。那么能不能有一种机制，程序员只需要定义很多个任务，让系统去帮助我们把这些任务分配到CPU上实现并发执行呢？
+Go语言中的goroutine就是这样一种机制，goroutine的概念类似于线程，但 goroutine是由Go的运行时（runtime）调度和管理的。Go程序会智能地将 goroutine 中的任务合理地分配给每个CPU。Go语言之所以被称为现代化的编程语言，就是因为它在语言层面已经内置了调度和上下文切换的机制。
+在Go语言编程中你不需要去自己写进程、线程、协程，你的技能包里只有一个技能–goroutine，当你需要让某个任务并发执行的时候，你只需要把这个任务包装成一个函数，开启一个goroutine去执行这个函数就可以了，就是这么简单粗暴。
+使用goroutine Go语言中使用goroutine非常简单，只需要在调用函数的时候在前面加上go关键字，就可以为一个函数创建一个goroutine。
+一个goroutine必定对应一个函数，可以创建多个goroutine去执行相同的函数。
+启动单个goroutine 启动goroutine的方式非常简单，只需要在调用的函数（普通函数和匿名函数）前面加上一个go关键字。
+举个例子如下：
+func hello() { fmt.Println(&amp;#34;Hello Goroutine!&amp;#34;) } func main() { hello() fmt.Println(&amp;#34;main goroutine done!&amp;#34;) } 这个示例中hello函数和下面的语句是串行的，执行的结果是打印完Hello Goroutine!后打印main goroutine done!。
+接下来我们在调用hello函数前面加上关键字go，也就是启动一个goroutine去执行hello这个函数。
+func main() { go hello() // 启动另外一个goroutine去执行hello函数 	fmt.Println(&amp;#34;main goroutine done!&amp;#34;) } 这一次的执行结果只打印了main goroutine done!，并没有打印Hello Goroutine!。为什么呢？
+在程序启动时，Go程序就会为main()函数创建一个默认的goroutine。
+当main()函数返回的时候该goroutine就结束了，所有在main()函数中启动的goroutine会一同结束，main函数所在的goroutine就像是权利的游戏中的夜王，其他的goroutine都是异鬼，夜王一死它转化的那些异鬼也就全部GG了。
+所以我们要想办法让main函数等一等hello函数，最简单粗暴的方式就是time.Sleep了。
+func main() { go hello() // 启动另外一个goroutine去执行hello函数 	fmt.</description>
+    </item>
+    
+  </channel>
+</rss>
